@@ -20,10 +20,9 @@ APP.video = (function(){
             } else {
                 // create a new empty data structure based on new video Id
                 var vidId = APP.video.getVideoId();
-                var dataObj = {};
-                var intervalObj = APP.sentiment.getIntervalObj(0,0);
-                dataObj[vidId] = {'votes': intervalObj}; //KB: store user at the vote level?
-                APP.db.set(videosRef, dataObj);
+                var voteObj = APP.sentiment.getVoteObj(0, 0);
+                var seedVideosRef = new Firebase(APP.db.getFbBase() + '/videos/' + APP.video.getVideoId() + '/0');
+                APP.db.push(seedVideosRef, voteObj);
             }
         });
     };

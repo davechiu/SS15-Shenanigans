@@ -16,11 +16,11 @@ APP.sentiment = (function(){
         return newDataObj;
     };
 
-    var getIntervalObj = function(interval, vote) {
+    var getVoteObj = function(interval, vote) {
         var dataObj = {};
-        dataObj[interval] = {
-            value: vote,
+        dataObj = {
             // uid: userID,
+            value: vote,
             time: interval,
             dt: (new Date()).getTime()
         };
@@ -29,11 +29,13 @@ APP.sentiment = (function(){
 
     //triggered from $.subscribe vote event
     var postVote = function(event, value) {
-        var refVoteUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId() + '/votes';
+        var interval = value;
+        var refVoteUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId() + '/' + interval;
         var refVote = new Firebase(refVoteUrl);
         console.log(event, value);
         console.log(refVoteUrl);
-        APP.db.update(refVote, getIntervalObj(1000, tempVoteValue));
+        APP.db.push(refVote, getVoteObj(interval, tempVoteValue));
+        //just track the sum?
         $.unsubscribe('/video/currentTime', postVote);
     };
 
@@ -57,7 +59,7 @@ APP.sentiment = (function(){
     return {
         init: init,
         getNewDataObj: getNewDataObj,
-        getIntervalObj: getIntervalObj,
+        getVoteObj: getVoteObj,
         postVote: postVote
     };
 

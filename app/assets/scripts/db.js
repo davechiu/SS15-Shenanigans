@@ -24,6 +24,10 @@ APP.db = (function(){
         ref.set(value, onComplete);
     };
 
+    var push = function(ref, value) {
+        ref.push(value, onComplete);
+    };
+
     var getFbBase = function() {
         return base;
     };
@@ -57,6 +61,7 @@ APP.db = (function(){
         setDataObj: setDataObj,
         getDataObj: getDataObj,
         set: set,
+        push: push,
         update: update
     };
 
