@@ -5,10 +5,12 @@
 var APP = window.APP = window.APP || {};
 
 APP.db = (function(){
-    var base = 'https://shenanigans.firebaseio.com/';
-    // var base = 'https://shenanigans-kb.firebaseio.com/';
-    var fbRef = new Firebase(base);
-    var votesRef = new Firebase(base + '/votes');
+
+    var base = 'https://shenan-athon.firebaseio.com/';
+    // var base = 'https://shenanigans.firebaseio.com/';
+    //var base = 'https://shenanigans-kb.firebaseio.com/';
+    // var fbRef = new Firebase(base);
+    // var votesRef = new Firebase(base + '/votes');
     // var userRef = new Firebase(base + '/users');
 
     // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
@@ -18,8 +20,8 @@ APP.db = (function(){
         ref.set(value, onComplete);
     };
 
-    var getFbRef = function() {
-        return fbRef;
+    var getFbBase = function() {
+        return base;
     };
 
     var getDataObj = function() {
@@ -39,35 +41,7 @@ APP.db = (function(){
     };
 
     var init = function() {
-
-        //check to see if there is a new video - not pushing data yet.
-        var vId = APP.video.getVideoId();
-        fbRef.once('value', function(snapshot){
-            var exists = snapshot.child(vId).exists();
-            if(exists) {
-                // store the entire object in the APP.db name
-                setDataObj(exists);
-            } else {
-                // create a new empty data structure based on new video Id
-                var vidId = APP.video.getVideoId();
-                var dataObj = {};
-                dataObj[vidId] = {};
-                set(fbRef, dataObj);
-            }
-
-        });
-        // basic connection proven
-        // set(fbRef, data);
-
-        // WORK IN PROGRESS
-        /*
-        building a test query... wip
-        var query = {
-            APP.video.getVideoId
-        } ;
-        set(mediaRef, );
-        */
-
+        APP.video.setup();
     };
 
     /**
@@ -75,7 +49,7 @@ APP.db = (function(){
     */
     return {
         init: init,
-        getFbRef: getFbRef,
+        getFbBase: getFbBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
         set: set

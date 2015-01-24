@@ -13,7 +13,6 @@ APP.sentiment = (function(){
         return newDataObj;
     };
 
-    //
     // template
     var voteObj = {
         value: 0,
