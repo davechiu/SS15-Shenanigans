@@ -22,8 +22,8 @@ APP.db = (function(){
         ref.set(value, onComplete);
     };
 
-    var getFbRef = function() {
-        return fbRef;
+    var getFbBase = function() {
+        return base;
     };
 
     var getDataObj = function() {
@@ -43,35 +43,7 @@ APP.db = (function(){
     };
 
     var init = function() {
-
-        //check to see if there is a new video - not pushing data yet.
-        var vId = APP.video.getVideoId();
-        fbRef.once('value', function(snapshot){
-            var exists = snapshot.child(vId).exists();
-            if(exists) {
-                // store the entire object in the APP.db name
-                setDataObj(exists);
-            } else {
-                // create a new empty data structure based on new video Id
-                var vidId = APP.video.getVideoId();
-                var dataObj = {};
-                dataObj[vidId] = {};
-                set(fbRef, dataObj);
-            }
-
-        });
-        // basic connection proven
-        // set(fbRef, data);
-
-        // WORK IN PROGRESS
-        /*
-        building a test query... wip
-        var query = {
-            APP.video.getVideoId
-        } ;
-        set(mediaRef, );
-        */
-
+        APP.video.setup();
     };
 
     /**
@@ -79,7 +51,7 @@ APP.db = (function(){
     */
     return {
         init: init,
-        getFbRef: getFbRef,
+        getFbBase: getFbBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
         set: set

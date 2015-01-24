@@ -3,9 +3,30 @@
 var APP = window.APP = window.APP || {};
 
 APP.video = (function(){
+    var Firebase = window.Firebase;
     var videoId;
     var videoService;
     var videoRatio = 390/640;
+    var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
+
+    var setup = function(){
+        // get or create video record on FB
+        console.log(APP.video.getVideoId(), 'get this id');
+        videosRef.once('value', function(snapshot){
+            var exists = snapshot.child(videoId).exists();
+            if(exists) {
+                // store the entire object in the APP.db name
+                APP.db.setDataObj(exists);
+            } else {
+                // create a new empty data structure based on new video Id
+                var vidId = APP.video.getVideoId();
+                var dataObj = {};
+                dataObj[vidId] = {'votes': {0:0}};
+                APP.db.set(videosRef, dataObj);
+            }
+
+        });
+    };
 
     var initYouTube = function(){
 
@@ -141,7 +162,8 @@ APP.video = (function(){
         getVideoId: getVideoId,
         setVideoService: setVideoService,
         getVideoService: getVideoService,
-        resizeVideo: resizeVideo
+        resizeVideo: resizeVideo,
+        setup: setup
     };
 
 }());

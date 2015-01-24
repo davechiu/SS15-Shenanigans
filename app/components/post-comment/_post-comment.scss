@@ -1,5 +1,15 @@
 .post-comment {
     position:relative;
+    &__wrapper:before {
+        content: attr(data-name);
+        display: inline-block;
+        font-size: 1em;
+        font-weight: normal;
+        padding: 1em 0;
+        position: absolute;
+        right: 50%;
+        vertical-align: middle;
+    }
     input {
         width: 45%;
         position: relative;
@@ -9,18 +19,5 @@
         border: 1px solid #3366FF;
         border-left: 6px solid #3366FF;
         padding: 5px;
-        &:before {
-            content: attr(data-name);
-            position: relative;
-            left: 10px;
-            display: inline-block;
-            font-family: sans-serif;
-            font-size: 1.6em;
-            font-weight: normal;
-            line-height: 32px;
-            padding: 1em 0;
-            vertical-align: middle;
-            visibility: hidden;
-        }
     }
 }
