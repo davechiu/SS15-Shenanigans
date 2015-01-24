@@ -1,0 +1,25 @@
+.post-comment {
+
+    /**
+     * BASE COMPONENT STYLES HERE
+     * (common across all screen sizes)
+     */
+
+    /**
+     * SIZE-SPECIFIC MODIFICATIONS AND ENHANCEMENTS
+     * (start small and work up)
+     * baseline breakpoints are included, add more as needed
+     */
+
+    @include respond-to($mobile) {
+
+    }
+
+    @include respond-to($tablet) {
+
+    }
+
+    @include respond-to($desktop) {
+
+    }
+}
