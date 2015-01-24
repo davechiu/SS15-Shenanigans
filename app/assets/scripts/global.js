@@ -4,6 +4,8 @@ var APP = window.APP = window.APP || {};
 
 APP.global = (function(){
 
+    var refresh = 200; //global refresh rate
+
     var splitVideoParams = function(str) {
         var vidStr = str.match(/^\w{2}_/);
         if(vidStr) {
@@ -31,14 +33,16 @@ APP.global = (function(){
 
     };
 
+    var getRefresh = function() {
+        return refresh;
+    };
+
     var initGlobalComponents = function() {
         APP.user.init();
-        // APP.navigation.init();
-        // APP.footer.init();
         APP.video.init();
         APP.sentiment.init();
-        // APP.db.init();
         APP.related.init();
+        APP.notification.init();
     };
 
     var initPageComponents = function() {
@@ -49,24 +53,22 @@ APP.global = (function(){
 
         var defaultVideoId = 'yt_M7lc1UVf-VE';
         splitVideoParams( (window.getURLParameter('v')) ? window.getURLParameter('v') : defaultVideoId );
-        /**
-        * initialize global components
-        */
+
         initGlobalComponents();
 
-        /**
-        * initialize components for the current page
-        */
         initPageComponents();
 
         easterEgg();
+
+        if (APP.notification.checkIfRead('explainer') === -1) {
+            var notificaitonHtml = $(document.createElement('p')).text('React lets you vote and comment on media in Warped Time, everyone experiences it as if it was being broadcasted live!');
+            APP.notification.createNotification('explainer', notificaitonHtml);
+        }
     };
 
-    /**
-    * interfaces to public functions
-    */
     return {
-        init: init
+        init: init,
+        getRefresh: getRefresh
     };
 
 }());

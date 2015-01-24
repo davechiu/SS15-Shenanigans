@@ -96,7 +96,6 @@ APP.comments = (function(){
 
     };
 
-
     var getVideoId = function() {
         setVideoId(APP.video.getVideoId());
     };
