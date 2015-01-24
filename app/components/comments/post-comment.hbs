@@ -1,5 +1,9 @@
 <div class="post">
 	<div data-name="test" class="post__wrapper">
-		<input type="text" name="post-comment" maxlength="80" placeholder="Leave a short comment - Hit enter!" />
+		<form class="comment-form" name="comment-form">
+			<input type="text" id="posting-as" name="posting-as" value="" />
+			<label for="post-comment" class="accessibility-hidden">Comment</label>
+			<input type="text" id="post-comment" name="post-comment" maxlength="80" placeholder="What do you think?" />
+		</form>
 	</div>
 </div>
