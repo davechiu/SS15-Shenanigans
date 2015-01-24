@@ -18,6 +18,7 @@ APP.global = (function(){
     var easterEgg = function(){
         var kkeys = [];
         var bananas = "66,65,78,65,78,65,83";
+        /*
         $(document).keydown(function(e) {
             kkeys.push( e.keyCode );
             if ( kkeys.toString().indexOf( bananas ) >= 0 ){
@@ -25,6 +26,7 @@ APP.global = (function(){
                 window.location = '?v=yt_nBJV56WUDng';
             }
         });
+        */
     };
 
     var initGlobalComponents = function() {
