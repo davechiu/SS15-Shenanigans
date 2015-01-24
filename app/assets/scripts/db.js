@@ -8,12 +8,10 @@ APP.db = (function(){
 
     var base = 'https://shenan-athon.firebaseio.com/';
     // var base = 'https://shenanigans.firebaseio.com/';
-    // var base = 'https://shenanigans.firebaseio.com/';
-    // var base = 'https://shenanigans-kb.firebaseio.com/';
-    var fbRef = new Firebase(base);
-    var votesRef = new Firebase(base + '/votes');
-    var commentsRef = new Firebase(base + '/comments');
-    var usersRef = new Firebase(base + '/users');
+    //var base = 'https://shenanigans-kb.firebaseio.com/';
+    // var fbRef = new Firebase(base);
+    // var votesRef = new Firebase(base + '/votes');
+    // var userRef = new Firebase(base + '/users');
 
     // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
     var dataObj = {};
