@@ -49,7 +49,11 @@
 
         &.positive {
             background: $btn_color_positive;
-            left: -1em;
+            left: 0;
+
+            @include respond-to($desktop) {
+                left: -1em;
+            }
 
             &:hover, &:focus {
                 background: darken($btn_color_positive, 5%);
@@ -61,7 +65,11 @@
         }
         &.negative {
             background: $btn_color_negative;
-            right: -1em;
+            right: 0;
+
+            @include respond-to($desktop) {
+                right: -1em;
+            }
 
             &:hover, &:focus {
                 background: darken($btn_color_negative, 5%);
