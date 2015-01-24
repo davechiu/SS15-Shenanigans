@@ -7,8 +7,8 @@ var APP = window.APP = window.APP || {};
 APP.db = (function(){
 
     // var base = 'https://shenanigans.firebaseio.com/';
-    var base = 'https://shenanigans-kb.firebaseio.com';
-    // var base = 'https://shenan-athon.firebaseio.com/';
+    // var base = 'https://shenanigans-kb.firebaseio.com';
+    var base = 'https://shenan-athon.firebaseio.com/';
     // var fbRef = new Firebase(base);
     // var votesRef = new Firebase(base + '/votes');
     // var userRef = new Firebase(base + '/users');
