@@ -18,8 +18,8 @@ APP.db = (function(){
         ref.set(value, onComplete);
     };
 
-    var getBase = function() {
-        return base;
+    var getFbRef = function() {
+        return fbRef;
     };
 
     var getDataObj = function() {
@@ -75,10 +75,9 @@ APP.db = (function(){
     */
     return {
         init: init,
-        getBase: getBase,
+        getFbRef: getFbRef,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
-        postVote: postVote,
         set: set
     };
 
