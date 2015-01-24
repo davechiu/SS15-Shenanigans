@@ -1,6 +1,21 @@
 .sentiment {
     position: relative;
-    min-height: 10em;
+
+    .wrapper {
+        padding: 1em 3em;
+        position: relative;
+        min-height: 10em;
+    }
+
+    h1 {
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+        line-height: 1.1;
+        font-size: 2em;
+        padding: 0.5em;
+        border-bottom: 1px solid #CCC;
+    }
 
     a.btn {
 
