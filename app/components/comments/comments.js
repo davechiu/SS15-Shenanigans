@@ -11,6 +11,12 @@ APP.comments = (function(){
     var init = function() {
         console.log('APP.comments');
         bindEventsToUI();
+        console.log('name: '+APP.user.getName());
+        if(APP.user.getName()){
+            $('.post__wrapper').attr('data-name', APP.user.getName);
+        }else{
+            $('.post__wrapper').attr('data-name', 'default');
+        }
     };
 
     /**
