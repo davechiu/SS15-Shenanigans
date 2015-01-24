@@ -26,7 +26,7 @@ APP.global = (function(){
     var init = function() {
 
         var defaultVideoId = 'yt_M7lc1UVf-VE';
-        splitVideoParams( (window.getURLParameter('videoId')) ? window.getURLParameter('videoId') : defaultVideoId );
+        splitVideoParams( (window.getURLParameter('v')) ? window.getURLParameter('v') : defaultVideoId );
         /**
         * initialize global components
         */
