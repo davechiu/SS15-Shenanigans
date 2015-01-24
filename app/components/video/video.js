@@ -28,6 +28,9 @@ APP.video = (function(){
                 height: videoHeight,
                 width: videoWidth,
                 videoId: APP.video.getVideoId(),
+                playerVars: {
+                    'autoplay': 0
+                },
                 events: {
                     'onReady': window.onPlayerReady,
                     'onStateChange': window.onPlayerStateChange
@@ -37,7 +40,7 @@ APP.video = (function(){
 
         // 4. The API will call this function when the video player is ready.
         window.onPlayerReady = function(event) {
-            event.target.playVideo();
+            //event.target.playVideo();
         };
 
         // 5. The API calls this function when the player's state changes.
@@ -59,10 +62,6 @@ APP.video = (function(){
         window.stopVideo = function() {
             window.player.stopVideo();
         };
-
-        $(window).on('resize', function(){
-            APP.video.resizeVideo($('.content .card .video iframe'));
-        });
     };
 
     var resizeVideo = function($video) {
@@ -75,7 +74,25 @@ APP.video = (function(){
         });
     };
 
-    var getVideoId = function( ){
+    var initNametag = function() {
+        $('.nametag input#user_name').val(APP.user.getName());
+        $('.nametag input#user_name').on("click", function () {
+            $(this).select();
+        });
+
+        $('.nametag form#intake').on('submit', function(e){
+            e.preventDefault();
+            // console.log($('.nametag input#user_name').val());
+            // submit name to something, user object?
+            closeNameTag();
+        });
+    };
+    var closeNameTag = function() {
+        $('#onboarding').fadeOut('fast');
+        window.player.playVideo();
+    };
+
+    var getVideoId = function() {
         return videoId;
     };
 
@@ -102,9 +119,17 @@ APP.video = (function(){
     var init = function() {
         console.log('APP.video');
 
+        initNametag();
+
         if(videoService === 'yt') {
             initYouTube();
         }
+
+        $(window).on('resize', function(){
+            APP.video.resizeVideo($('.content .card .video iframe'));
+
+        });
+        $(window).trigger('resize');
     };
 
     /**
