@@ -17,6 +17,22 @@
         border-bottom: 1px solid #CCC;
     }
 
+    .chart {
+        width: 95%;
+        margin: 0 auto;
+        min-height: 200px;
+        position: relative;
+        background: white;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            border-top: 1px dotted #666;
+            height: 2px;
+            width: 100%;
+        }
+    }
+
     a.btn {
 
         $btn_color_positive: #4CAF50;
