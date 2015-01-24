@@ -13,7 +13,6 @@
 
             input[type=text] {
                 border: 0;
-                border-bottom: 1px solid #CCC;
                 width: 100%;
                 outline: none;
             }
@@ -45,6 +44,14 @@
 
             input#post-comment {
                 font-size: 1.5em;
+                border-bottom: 1px solid #EEE;
+
+                &:hover {
+                    border-bottom: 1px solid #CCC;
+                }
+                &:focus {
+                    border-bottom: 1px solid #999;
+                }
             }
 
             &:hover {

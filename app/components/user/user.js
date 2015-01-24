@@ -28,9 +28,15 @@ APP.user = (function(){
     var initNametag = function() {
         $('#onboarding').fadeIn('fast');
 
-        $('.nametag input#user_name').val(generateName());
+        var tmpName = generateName();
+        $('.nametag input#user_name').val(tmpName);
+        $('input#posting-as').val(tmpName);
+
         $('.nametag input#user_name').on("click", function () {
             $(this).select();
+        });
+        $('.nametag input#user_name').on("change keypress keyup", function () {
+            $('input#posting-as').val($('.nametag input#user_name').val());
         });
 
         $('.nametag form#intake').on('submit', function(e){
@@ -42,6 +48,7 @@ APP.user = (function(){
     };
     var nameTagHandler = function() {
         $('#onboarding').fadeOut('fast');
+        $('input#posting-as').val($('.nametag input#user_name').val());
         setName($('.nametag input#user_name').val());
         window.player.playVideo();
     };
