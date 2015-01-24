@@ -103,7 +103,7 @@ APP.video = (function(){
         console.log('APP.video');
 
         if(videoService === 'yt') {
-            initYouTube();
+            //initYouTube();
         }
     };
 
