@@ -5,7 +5,8 @@ var APP = window.APP = window.APP || {};
 APP.sentiment = (function(){
 
     var bindVote = function(){
-        $('.sentiment [data-value]').on('click', function(){
+        $('.sentiment [data-value]').on('click', function(e){
+            e.preventDefault();
             console.log('vote!');
             $.subscribe('/video/currentTime', APP.db.postVote);
         });
