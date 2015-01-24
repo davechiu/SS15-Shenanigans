@@ -62,10 +62,12 @@ APP.comments = (function(){
                 var comment = commentSnapshot.val();
                 $.each(comment, function(uid,val){
                     // 4. do something with them
+                    /*
                     console.log('this id: '+uid);
                     console.log('load comments: '+val.comment);
                     console.log('load comments: '+val.time);
                     console.log('load comments: '+val.dt);
+                    */
                     var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
                     $('.comment-feed ul').prepend(li);
                 });
