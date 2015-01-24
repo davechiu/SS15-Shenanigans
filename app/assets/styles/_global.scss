@@ -2,6 +2,11 @@
     GLOBAL/BASE STYLES
 \*------------------------------------*/
 
+$pri-color: #03A9F4;
+$pri-color-dark: #0277BD;
+$pri-color-rgb: 3, 169, 244;
+$pri-color-dark-rgb: 2, 119, 189;
+
 body,
 html {
     padding: 0;
@@ -15,7 +20,17 @@ body {
     @include rem(1.6);
     line-height: 1.4; // unitless line-height to be based off the element's size
     background: #EEEEEE;
+    font-family: 'Open Sans', Helvetica, Sans-serif;
 }
 
-$pri-color: #03A9F4;
-$pri-color-dark: #0277BD;
+.accessibility-hidden {
+	position: absolute;
+	left: -9999px;
+}
+
+::selection {
+  background: lighter($pri-color, 10%); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: lighter($pri-color, 10%); /* Gecko Browsers */
+}

@@ -29,7 +29,8 @@ APP.sentiment = (function(){
     };
 
     var bindVote = function(){
-        $('.sentiment [data-value]').on('click', function(){
+        $('.sentiment [data-value]').on('click', function(e){
+            e.preventDefault();
             $.subscribe('/video/currentTime', APP.sentiment.postVote);
         });
     };
