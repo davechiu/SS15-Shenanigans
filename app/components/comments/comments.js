@@ -61,15 +61,17 @@ APP.comments = (function(){
                 // 3. extrac values from children
                 var comment = commentSnapshot.val();
                 $.each(comment, function(uid,val){
-                    // 4. do something with them
-                    /*
-                    console.log('this id: '+uid);
-                    console.log('load comments: '+val.comment);
-                    console.log('load comments: '+val.time);
-                    console.log('load comments: '+val.dt);
-                    */
-                    var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
-                    $('.comment-feed ul').prepend(li);
+                    if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
+                        // 4. do something with them
+                        //*
+                        console.log('this id: '+uid);
+                        console.log('load comment: '+val.comment);
+                        console.log('load time: '+val.time);
+                        console.log('load dt: '+val.dt);
+                        //*/
+                        var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
+                        $('.comment-feed ul').prepend(li);
+                    }
                 });
             });
         });
