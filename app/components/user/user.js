@@ -51,6 +51,8 @@ APP.user = (function(){
 
         if (typeof $.cookie('name') === 'undefined') {
             initNametag();
+        } else {
+            setName($.cookie('name'));
         }
     };
 
