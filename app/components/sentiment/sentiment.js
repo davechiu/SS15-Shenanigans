@@ -9,8 +9,8 @@ APP.sentiment = (function(){
 
     var getNewDataObj = function() {
         var vidId = APP.video.getVideoId();
-        newSentimentDataObj[vidId] = {votes: null};
-        return newSentimentDataObj;
+        newDataObj[vidId] = {votes: null};
+        return newDataObj;
     };
 
     // template
