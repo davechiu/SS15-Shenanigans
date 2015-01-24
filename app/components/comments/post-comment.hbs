@@ -1,14 +1,18 @@
 <div class="post">
 	<div data-name="Error" class="post__wrapper">
-		<form class="comment-form" name="comment-form">
-			<div class="row">
-				<label for="posting-as" class="">Posting as</label><!--
-				--><input type="text" id="posting-as" name="posting-as" value="" />
-			</div>
-			<div class="row">
+		<div class="row">
+			<form id="postname" class="comment-form" name="comment-name">
+				<label for="posting-as" class="">Posting as</label>
+				<input type="text" id="posting-as" name="posting-as" value="" />
+				<input type="submit" class="visibility-hidden" style="height: 0px; width: 0px; border: none; padding: 0px;" hidefocus="true" />
+			</form>
+		</div>
+		<div class="row">
+			<form id="postcomment" class="comment-form" name="comment-form">
 				<label for="post-comment" class="accessibility-hidden">Comment</label>
 				<input type="text" id="post-comment" name="post-comment" maxlength="80" placeholder="What do you think?" />
-			</div>
-		</form>
+				<input type="submit" class="visibility-hidden" style="height: 0px; width: 0px; border: none; padding: 0px;" hidefocus="true" />
+			</form
+		</div>
 	</div>
 </div>

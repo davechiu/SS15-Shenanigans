@@ -26,8 +26,19 @@ APP.comments = (function(){
     };
 
     var bindEventsToUI = function() {
-        var test;
+        $('form.comment-form').on('submit', function(event){
+            event.preventDefault();
+            console.log('comment form post: '+$('input#post-comment').val());
+            /*
+            // create a new empty data structure based on new video Id
+            var dataObj = {};
+            var intervalObj = APP.sentiment.getIntervalObj(0,0);
+            dataObj[videoId] = {'comments': intervalObj};
+            APP.db.set(commentRef, dataObj);
+            */
+        });
     };
+
     var setName = function() {
         if(APP.user.getName()){
             $('.post__wrapper').attr('data-name', APP.user.getName()+' says:');
@@ -55,6 +66,7 @@ APP.comments = (function(){
 
         $('input#posting-as').on('change', function(){
             APP.user.setName($('input#posting-as').val());
+            console.log('name changed');
         });
 
         // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});
@@ -66,7 +78,7 @@ APP.comments = (function(){
         getVideoId();
         setup();
         setName();
-        initPostForm();
+        //initPostForm();
 
     };
 
