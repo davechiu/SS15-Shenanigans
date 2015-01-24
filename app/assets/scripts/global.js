@@ -4,6 +4,15 @@ var APP = window.APP = window.APP || {};
 
 APP.global = (function(){
 
+    var splitVideoParams = function(str) {
+        var vidStr = str.match(/^\w{2}_/);
+        if(vidStr) {
+            APP.video.setVideoService(vidStr[0].replace('_','')); //yt
+            APP.video.setVideoId(str.substr(3, str.length )); //
+            console.log(str.substr(vidStr[0].length, str.length ));
+        }
+    };
+
     var initGlobalComponents = function() {
         // APP.navigation.init();
         // APP.footer.init();
@@ -17,9 +26,7 @@ APP.global = (function(){
     var init = function() {
 
         var defaultVideoId = 'yt_M7lc1UVf-VE';
-        var videoId = (window.getURLParameter('videoId')) ? window.getURLParameter('videoId') : defaultVideoId;
-
-        APP.video.setVideoId(videoId);
+        splitVideoParams( (window.getURLParameter('videoId')) ? window.getURLParameter('videoId') : defaultVideoId );
         /**
         * initialize global components
         */
