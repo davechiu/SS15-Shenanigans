@@ -1,0 +1,39 @@
+header {
+
+    background: $pri-color;
+    border-top: 0.5em solid $pri-color-dark;
+    padding: 1em 2em;
+    font-family: 'Open Sans', Sans-serif;
+    color: white;
+    box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+
+    p {
+        margin: 0;
+        line-height: 1;
+
+        strong {
+            font-size: 1.5em;
+        }
+        small {
+            font-size: 0.75em;
+        }
+    }
+
+    /**
+     * SIZE-SPECIFIC MODIFICATIONS AND ENHANCEMENTS
+     * (start small and work up)
+     * baseline breakpoints are included, add more as needed
+     */
+
+    @include respond-to($mobile) {
+
+    }
+
+    @include respond-to($tablet) {
+
+    }
+
+    @include respond-to($desktop) {
+
+    }
+}

@@ -17,7 +17,7 @@ APP.global = (function(){
         // APP.navigation.init();
         // APP.footer.init();
         APP.video.init();
-        APP.db.init();
+        // APP.db.init();
     };
 
     var initPageComponents = function() {

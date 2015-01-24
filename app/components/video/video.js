@@ -5,6 +5,7 @@ var APP = window.APP = window.APP || {};
 APP.video = (function(){
     var videoId;
     var videoService;
+    var videoRatio = 390/640;
 
     var initYouTube = function(){
 
@@ -19,10 +20,13 @@ APP.video = (function(){
         //    after the API code downloads.
         //window.player;
 
+        var videoWidth = $('.content .video').width();
+        var videoHeight = $('.content .video').width() * videoRatio;
+
         window.onYouTubeIframeAPIReady = function() {
             window.player = new window.YT.Player('player', {
-                height: '390',
-                width: '640',
+                height: videoHeight,
+                width: videoWidth,
                 videoId: APP.video.getVideoId(),
                 events: {
                     'onReady': window.onPlayerReady,
@@ -55,9 +59,23 @@ APP.video = (function(){
         window.stopVideo = function() {
             window.player.stopVideo();
         };
+
+        $(window).on('resize', function(){
+            APP.video.resizeVideo($('.content .card .video iframe'));
+        });
     };
 
-    var getVideoId = function(){
+    var resizeVideo = function($video) {
+        var videoWidth = $('.content .video').width();
+        var videoHeight = $('.content .video').width() * videoRatio;
+
+        $video.css({
+            height: videoHeight,
+            width: videoWidth
+        });
+    };
+
+    var getVideoId = function( ){
         return videoId;
     };
 
@@ -71,6 +89,14 @@ APP.video = (function(){
 
     var setVideoService = function(str) {
         videoService = str;
+    };
+
+    var getVideoRatio = function() {
+        return videoRatio;
+    };
+
+    var setVideoRatio = function(float) {
+        videoRatio = float;
     };
 
     var init = function() {
@@ -89,7 +115,8 @@ APP.video = (function(){
         setVideoId: setVideoId,
         getVideoId: getVideoId,
         setVideoService: setVideoService,
-        getVideoService: getVideoService
+        getVideoService: getVideoService,
+        resizeVideo: resizeVideo
     };
 
 }());

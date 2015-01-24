@@ -15,15 +15,20 @@
         <!-- bower:css -->
         <!-- endbower -->
         <!-- endbuild -->
-
         <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
         <!-- build:css(.tmp) assets/styles/main.css -->
         <link rel="stylesheet" href="assets/styles/main.css">
         <!-- endbuild -->
 
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:700,400);" />
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Gentium+Book+Basic:400,700);" />
+
     </head>
     <body>
+        {{> header }}
+
         <div class="wrapper">
             {{> body }}
         </div>
@@ -44,6 +49,8 @@
         <script src="assets/scripts/global.js"></script>
         <script src="pages/home/home.js"></script>
         <script src="components/video/video.js"></script>
+        <script src="components/header/header.js"></script>
+        <script src="components/sentiment/sentiment.js"></script>
         <!-- endbuild -->
 
     </body>
