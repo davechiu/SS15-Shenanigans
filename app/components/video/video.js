@@ -1,9 +1,10 @@
+/* global Firebase */
+
 'use strict';
 
 var APP = window.APP = window.APP || {};
 
 APP.video = (function(){
-    var Firebase = window.Firebase;
     var videoId;
     var videoService;
     var videoRatio = 390/640;
