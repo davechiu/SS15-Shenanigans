@@ -22,6 +22,7 @@ APP.user = (function(){
 
     var setName = function(str) {
         fullName = str;
+        $.cookie('name', str);
     };
 
     var initNametag = function() {
@@ -42,7 +43,6 @@ APP.user = (function(){
     var nameTagHandler = function() {
         $('#onboarding').fadeOut('fast');
         setName($('.nametag input#user_name').val());
-        $.cookie('name', getName());
         window.player.playVideo();
     };
 

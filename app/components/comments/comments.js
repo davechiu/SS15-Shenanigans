@@ -25,7 +25,6 @@ APP.comments = (function(){
         });
     };
 
-
     var bindEventsToUI = function() {
         var test;
     };
@@ -45,12 +44,29 @@ APP.comments = (function(){
         videoId = getVideoId;
     };
 
+    var initPostForm = function(){
+        $('input#posting-as').val(APP.user.getName());
+        $('form.comment-form').on('submit', function(e){
+            e.preventDefault();
+
+            console.log('submit comment');
+            // DO COMMENT SUBMISSION
+        });
+
+        $('input#posting-as').on('change', function(){
+            APP.user.setName($('input#posting-as').val());
+        });
+
+        // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});
+    };
+
     var init = function() {
         console.log('APP.comments');
         bindEventsToUI();
         getVideoId();
         setup();
         setName();
+        initPostForm();
 
     };
 

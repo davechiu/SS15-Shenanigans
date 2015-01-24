@@ -6,10 +6,52 @@
     &__wrapper {
         padding: 1em;
 
-        input[type=text] {
-            border: 0;
-            border-bottom: 1px solid #CCC;
+        .row {
             width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+
+            input[type=text] {
+                border: 0;
+                border-bottom: 1px solid #CCC;
+                width: 100%;
+                outline: none;
+            }
+
+            label[for=posting-as] {
+                display: block;
+                margin: 0;
+                padding: 0;
+                width: 0;
+                overflow: hidden;
+                font-size: 0.5em;
+                color: #999;
+
+                transition: all 250ms;
+            }
+            input#posting-as {
+                display: block;
+                border: 0;
+                margin-bottom: 0.25em;
+                border-bottom: 1px solid transparent;
+
+                &:hover {
+                    border-bottom: 1px solid #CCC;
+                }
+                &:focus {
+                    border-bottom: 1px solid #999;
+                }
+            }
+
+            input#post-comment {
+                font-size: 1.5em;
+            }
+
+            &:hover {
+                label[for=posting-as] {
+                    width: 5em;
+                }
+            }
         }
     }
 }
