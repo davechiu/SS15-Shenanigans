@@ -76,7 +76,9 @@ APP.video = (function(){
     var init = function() {
         console.log('APP.video');
 
-        initYouTube();
+        if(videoService === 'yt') {
+            initYouTube();
+        }
     };
 
     /**
