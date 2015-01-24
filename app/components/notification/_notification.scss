@@ -1,0 +1,28 @@
+.notification {
+	background: $pri-color-dark;
+	color: white;
+	border-radius: 2px;
+
+	.wrapper {
+		padding: 1em 3em 1em 1em;
+		position: relative;
+
+		p {
+			margin: 0;
+		}
+
+		a.close {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 1em;
+			color: white;
+			text-decoration: none;
+			outline: none;
+
+			&:hover, &:focus {
+				opacity: 0.5;
+			}
+		}
+	}
+}
