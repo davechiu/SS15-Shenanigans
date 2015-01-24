@@ -5,30 +5,24 @@
 var APP = window.APP = window.APP || {};
 
 APP.db = (function(){
+
     var base = 'https://shenan-athon.firebaseio.com/';
     // var base = 'https://shenanigans.firebaseio.com/';
+    // var base = 'https://shenanigans.firebaseio.com/';
+    // var base = 'https://shenanigans-kb.firebaseio.com/';
     var fbRef = new Firebase(base);
+    var votesRef = new Firebase(base + '/votes');
     // var userRef = new Firebase(base + '/users');
 
-    // load / create
+    // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
     var dataObj = {};
-
-    // template
-    var voteObj = {
-        value: 0,
-        rT: 0, //relativeTime,
-        eT: (new Date()).getTime() //epochTime
-    };
-
-    //triggered from $.subscribe vote event
-    var postVote = function(event, value) {
-        // console.log(event, value);
-        //SEND THIS VOTE OFF TO FIREBASE
-        $.unsubscribe('/video/currentTime', postVote);
-    };
 
     var set = function(ref, value) {
         ref.set(value, onComplete);
+    };
+
+    var getBase = function() {
+        return base;
     };
 
     var getDataObj = function() {
@@ -38,7 +32,6 @@ APP.db = (function(){
     var setDataObj = function(obj) {
         dataObj = obj;
     };
-
 
     var onComplete = function(error) {
         if (error) {
@@ -56,8 +49,13 @@ APP.db = (function(){
             var exists = snapshot.child(vId).exists();
             if(exists) {
                 // store the entire object in the APP.db name
+                setDataObj(exists);
             } else {
                 // create a new empty data structure based on new video Id
+                var vidId = APP.video.getVideoId();
+                var dataObj = {};
+                dataObj[vidId] = {};
+                set(fbRef, dataObj);
             }
 
         });
@@ -80,9 +78,11 @@ APP.db = (function(){
     */
     return {
         init: init,
+        getBase: getBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
-        postVote: postVote
+        postVote: postVote,
+        set: set
     };
 
 }());
