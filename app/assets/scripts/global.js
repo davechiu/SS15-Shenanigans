@@ -9,15 +9,17 @@ APP.global = (function(){
         if(vidStr) {
             APP.video.setVideoService(vidStr[0].replace('_','')); //yt
             APP.video.setVideoId(str.substr(3, str.length )); //
+            APP.db.init();
             console.log(str.substr(vidStr[0].length, str.length ));
         }
+        //once I know the vidStr, talk to firebase
     };
 
     var initGlobalComponents = function() {
         // APP.navigation.init();
         // APP.footer.init();
         APP.video.init();
-        APP.db.init();
+        // APP.db.init();
     };
 
     var initPageComponents = function() {
