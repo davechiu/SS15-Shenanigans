@@ -10,7 +10,6 @@ APP.comments = (function(){
     var setup = function(){
         // get or create video record on FB
         commentRef.once('value', function(snapshot){
-            window.alert('videoId: '+videoId);
             var exists = snapshot.child(videoId).exists();
             if(exists) {
                 // store the entire object in the APP.db name
