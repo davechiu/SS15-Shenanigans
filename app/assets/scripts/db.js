@@ -9,6 +9,13 @@ APP.db = (function(){
     var userRef = new Firebase('https://shenanigans.firebaseio.com/users');
     var mediaRef = new Firebase('https://shenanigans.firebaseio.com/media');
 
+    var onComplete = function(error) {
+        if (error) {
+            console.log('Synchronization failed');
+        } else {
+            console.log('Synchronization succeeded');
+        }
+    };
 
     var init = function() {
         APP.fbref.set({
@@ -18,8 +25,7 @@ APP.db = (function(){
             users: {
                 id: 'one'
             },
-
-        });
+        }, onComplete);
     };
 
     /**
