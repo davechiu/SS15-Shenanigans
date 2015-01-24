@@ -65,9 +65,9 @@ APP.comments = (function(){
         var interval = value;
         var commentRefUrl = APP.db.getFbBase() + '/comments/' + videoId + '/' + interval;
         var refComment = new Firebase(commentRefUrl);
-        APP.db.push(refComment  , getVoteObj(interval, tempCommentValue));
+        APP.db.push(refComment, getVoteObj(interval, tempCommentValue));
         //just track the sum?
-        $.unsubscribe('/video/currentTime', postComment);
+        $.unsubscribe('/video/currentTime', APP.comments.postComment);
         clearComment();
     };
 
