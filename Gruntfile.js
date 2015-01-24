@@ -31,7 +31,7 @@ module.exports = function (grunt) {
             },
             styles: {
                 files: ['<%= pkg.app %>/assets/styles/{,*/}*.css'],
-                tasks: ['copy:css', 'autoprefixer', 'stripmq:server']
+                tasks: ['copy:css', 'autoprefixer'] //, 'stripmq:server'
             },
             scripts : {
                 files: ['<%= pkg.app %>/**/*.js'],
@@ -385,7 +385,7 @@ module.exports = function (grunt) {
             'clean:server',
             'concurrent:server',
             'autoprefixer',
-            'stripmq:server',
+            // 'stripmq:server',
             'connect:livereload',
             'notify:server',
             'watch'
@@ -413,7 +413,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
-        'stripmq:dist',
+        // 'stripmq:dist',
         'rev',
         'usemin',
         'exec:version',
