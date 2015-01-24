@@ -39,6 +39,7 @@ APP.global = (function(){
         APP.sentiment.init();
         // APP.db.init();
         APP.related.init();
+        APP.notification.init();
     };
 
     var initPageComponents = function() {
@@ -60,6 +61,11 @@ APP.global = (function(){
         initPageComponents();
 
         easterEgg();
+
+        if (APP.notification.checkIfRead('explainer') === -1) {
+            var notificaitonHtml = $(document.createElement('p')).text('React lets you vote and comment on media in Warped Time, everyone experiences it as if it was being broadcasted live!');
+            APP.notification.createNotification('explainer', notificaitonHtml);
+        }
     };
 
     /**
