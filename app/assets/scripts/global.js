@@ -14,19 +14,19 @@ APP.global = (function(){
         }
         //once I know the vidStr, talk to firebase
     };
-    
+
     var easterEgg = function(){
         var kkeys = [];
         var bananas = "66,65,78,65,78,65,83";
-        /*
+
         $(document).keydown(function(e) {
             kkeys.push( e.keyCode );
             if ( kkeys.toString().indexOf( bananas ) >= 0 ){
-                $(document).unbind('keydown', arguments.callee);
+                $(document).unbind('keydown');
                 window.location = '?v=yt_nBJV56WUDng';
             }
         });
-        */
+
     };
 
     var initGlobalComponents = function() {
@@ -54,7 +54,7 @@ APP.global = (function(){
         * initialize components for the current page
         */
         initPageComponents();
-        
+
         easterEgg();
     };
 
