@@ -1,0 +1,17 @@
+/*------------------------------------*\
+    GLOBAL/BASE STYLES
+\*------------------------------------*/
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-size: 62.5%; // set root font size to ~10px for easy calculation
+}
+
+body {
+    @include rem(1.6);
+    line-height: 1.4; // unitless line-height to be based off the element's size
+}
