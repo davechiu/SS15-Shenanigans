@@ -30,6 +30,7 @@ APP.global = (function(){
     };
 
     var initGlobalComponents = function() {
+        APP.user.init();
         // APP.navigation.init();
         // APP.footer.init();
         APP.video.init();
