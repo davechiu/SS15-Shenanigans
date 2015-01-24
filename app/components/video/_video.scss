@@ -1,25 +1,32 @@
-.video {
+.card {
+    .video {
 
-    /**
-     * BASE COMPONENT STYLES HERE
-     * (common across all screen sizes)
-     */
+        iframe {
+            display: block;
+        }
 
-    /**
-     * SIZE-SPECIFIC MODIFICATIONS AND ENHANCEMENTS
-     * (start small and work up)
-     * baseline breakpoints are included, add more as needed
-     */
+        /**
+         * BASE COMPONENT STYLES HERE
+         * (common across all screen sizes)
+         */
 
-    @include respond-to($mobile) {
+        /**
+         * SIZE-SPECIFIC MODIFICATIONS AND ENHANCEMENTS
+         * (start small and work up)
+         * baseline breakpoints are included, add more as needed
+         */
 
+        @include respond-to($mobile) {
+
+        }
+
+        @include respond-to($tablet) {
+
+        }
+
+        @include respond-to($desktop) {
+
+        }
     }
 
-    @include respond-to($tablet) {
-
-    }
-
-    @include respond-to($desktop) {
-
-    }
 }

@@ -14,4 +14,8 @@ html {
 body {
     @include rem(1.6);
     line-height: 1.4; // unitless line-height to be based off the element's size
+    background: #EEEEEE;
 }
+
+$pri-color: #03A9F4;
+$pri-color-dark: #0277BD;

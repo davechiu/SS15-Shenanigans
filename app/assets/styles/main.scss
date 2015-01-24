@@ -19,7 +19,9 @@
 /* ----- Component Styles ----- */
 
 // Page-specific overrides for a given component should still be placed in the *component* scss.
-
+@import "../../components/header/header";
+@import "../../components/video/video";
+@import "../../components/sentiment/sentiment";
 
 /* ----- Page-Specific Styles ----- */
 
