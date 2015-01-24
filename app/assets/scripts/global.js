@@ -15,6 +15,10 @@ APP.global = (function(){
 
     var init = function() {
 
+        var defaultVideoId = '0x0x0';
+        var videoId = (window.getURLParameter('videoId')) ? window.getURLParameter('videoId') : defaultVideoId;
+
+        APP.video.setVideoId(videoId);
         /**
         * initialize global components
         */

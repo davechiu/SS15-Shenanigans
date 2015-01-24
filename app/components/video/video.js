@@ -4,8 +4,14 @@ var APP = window.APP = window.APP || {};
 
 APP.video = (function(){
 
-    var bindEventsToUI = function() {
+    var videoId;
 
+    var getVideoId = function(){
+        return videoId;
+    }
+
+    var setVideoId = function(id) {
+        videoId = id;
     };
 
     var init = function() {
@@ -17,7 +23,9 @@ APP.video = (function(){
      * interfaces to public functions
      */
     return {
-        init: init
+        init: init,
+        setVideoId: setVideoId,
+        getVideoId: getVideoId
     };
 
 }());
