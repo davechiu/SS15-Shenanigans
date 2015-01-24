@@ -35,3 +35,8 @@ function getURLParameter(sParam) {
         }
     }
 }
+
+// seconds to milliseconds
+var secToMillisec = function(sec) {
+    return sec * 1000;
+};

@@ -39,11 +39,17 @@ APP.video = (function(){
         // 5. The API calls this function when the player's state changes.
         //    The function indicates that when playing a video (state=1),
         //    the player should play for six seconds and then stop.
-        var done = false;
         window.onPlayerStateChange = function(event) {
-            if (event.data === window.YT.PlayerState.PLAYING && !done) {
-                setTimeout(window.stopVideo, 6000);
-                done = true;
+
+            if (event.data === window.YT.PlayerState.PLAYING) {
+                window.refreshIntervalId = setInterval(function () {
+                    var duration = window.player.getDuration();
+                    var currentTime = window.player.getCurrentTime();
+                    //console.log(current_time);
+                    $.publish("/video/currentTime", window.secToMillisec(currentTime));
+                }, 500);
+            } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+                clearInterval(window.refreshIntervalId);
             }
         };
         window.stopVideo = function() {
