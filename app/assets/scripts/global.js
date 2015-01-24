@@ -5,8 +5,9 @@ var APP = window.APP = window.APP || {};
 APP.global = (function(){
 
     var initGlobalComponents = function() {
-        APP.navigation.init();
+        // APP.navigation.init();
         // APP.footer.init();
+        APP.video.init();
     };
 
     var initPageComponents = function() {
