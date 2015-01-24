@@ -19,7 +19,6 @@ APP.sentiment = (function(){
         return dataObj;
     };
 
-    //
     // template
     var voteObj = {
         value: 0,

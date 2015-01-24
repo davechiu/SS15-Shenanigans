@@ -36,6 +36,7 @@ APP.global = (function(){
         APP.video.init();
         APP.sentiment.init();
         // APP.db.init();
+        APP.related.init();
     };
 
     var initPageComponents = function() {

@@ -2,14 +2,14 @@
 
 var APP = window.APP = window.APP || {};
 
-APP.commentFeed = (function(){
+APP.comments = (function(){
 
     var bindEventsToUI = function() {
 
     };
 
     var init = function() {
-        console.log('APP.commentFeed');
+        console.log('APP.comments');
         bindEventsToUI();
     };
 
