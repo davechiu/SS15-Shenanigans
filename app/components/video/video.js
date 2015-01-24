@@ -128,7 +128,7 @@ APP.video = (function(){
         if(videoService === 'yt') {
             initYouTube();
         }
-
+        APP.comments.init();
         $(window).on('resize', function(){
             APP.video.resizeVideo($('.content .card .video iframe'));
 

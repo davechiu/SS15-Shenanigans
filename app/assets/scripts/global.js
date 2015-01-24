@@ -35,7 +35,6 @@ APP.global = (function(){
         // APP.footer.init();
         APP.video.init();
         APP.sentiment.init();
-        APP.comments.init();
         // APP.db.init();
         APP.related.init();
     };
