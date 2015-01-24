@@ -7,7 +7,7 @@ APP.global = (function(){
     var splitVideoParams = function(str) {
         var vidStr = str.match(/^\w{2}_/);
         if(vidStr) {
-            APP.video.setVideoService(vidStr[0].replace('_','')); //yt
+            APP.video.setVideoService(vidStr[0].slice(0, -1)); //yt
             APP.video.setVideoId(str.substr(3, str.length )); //
             APP.db.init();
             console.log(str.substr(vidStr[0].length, str.length ));
