@@ -32,8 +32,8 @@ APP.sentiment = (function(){
         var interval = value;
         var refVoteUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId() + '/' + interval;
         var refVote = new Firebase(refVoteUrl);
-        console.log(event, value);
-        console.log(refVoteUrl);
+        // console.log(event, value);
+        // console.log(refVoteUrl);
         $.unsubscribe('/video/currentTime', APP.sentiment.postVote);
         APP.db.push(refVote, getVoteObj(interval, tempVoteValue));
     };
