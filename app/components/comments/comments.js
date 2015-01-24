@@ -55,9 +55,12 @@ APP.comments = (function(){
     var loadFeed = function(){
         commentRef.once('value', function(allMessagesSnapshot) {
             allMessagesSnapshot.forEach(function(messageSnapshot) {
+                console.log('load comments');
+                
+
                 // Will be called with a messageSnapshot for each message under message_list.
-                var userId = messageSnapshot.child('user_id').val();
-                var text = messageSnapshot.child('text').val();
+                //var userId = messageSnapshot.child('user_id').val();
+                //var text = messageSnapshot.child('text').val();
                 // Do something with message.
 
             });
