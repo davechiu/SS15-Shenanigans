@@ -4,6 +4,8 @@ var APP = window.APP = window.APP || {};
 
 APP.global = (function(){
 
+    var refresh = 200; //global refresh rate
+
     var splitVideoParams = function(str) {
         var vidStr = str.match(/^\w{2}_/);
         if(vidStr) {
@@ -31,13 +33,14 @@ APP.global = (function(){
 
     };
 
+    var getRefresh = function() {
+        return refresh;
+    };
+
     var initGlobalComponents = function() {
         APP.user.init();
-        // APP.navigation.init();
-        // APP.footer.init();
         APP.video.init();
         APP.sentiment.init();
-        // APP.db.init();
         APP.related.init();
         APP.notification.init();
     };
@@ -50,14 +53,9 @@ APP.global = (function(){
 
         var defaultVideoId = 'yt_M7lc1UVf-VE';
         splitVideoParams( (window.getURLParameter('v')) ? window.getURLParameter('v') : defaultVideoId );
-        /**
-        * initialize global components
-        */
+
         initGlobalComponents();
 
-        /**
-        * initialize components for the current page
-        */
         initPageComponents();
 
         easterEgg();
@@ -68,11 +66,9 @@ APP.global = (function(){
         }
     };
 
-    /**
-    * interfaces to public functions
-    */
     return {
-        init: init
+        init: init,
+        getRefresh: getRefresh
     };
 
 }());

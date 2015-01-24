@@ -9,6 +9,7 @@ APP.video = (function(){
     var videoService;
     var videoRatio = 390/640;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
+    var videoDuration;
 
     var setup = function(){
         // get or create video record on FB
@@ -64,20 +65,21 @@ APP.video = (function(){
             if (typeof $.cookie('name') !== 'undefined') {
                 window.player.playVideo();
             }
+            // set global duration
+            videoDuration = window.secToMillisec(window.player.getDuration().toFixed(1));
         };
 
         // 5. The API calls this function when the player's state changes.
         //    The function indicates that when playing a video (state=1),
         //    the player should play for six seconds and then stop.
         window.onPlayerStateChange = function(event) {
-
             if (event.data === window.YT.PlayerState.PLAYING) {
                 window.refreshIntervalId = setInterval(function () {
                     var duration = window.player.getDuration();
                     var currentTime = window.player.getCurrentTime();
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
-                }, 500);
+                }, APP.global.getRefresh());
             } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
             }
@@ -121,6 +123,10 @@ APP.video = (function(){
         videoRatio = float;
     };
 
+    var getVideoDuration = function(){
+        return videoDuration;
+    };
+
     var init = function() {
         console.log('APP.video');
 
@@ -144,6 +150,7 @@ APP.video = (function(){
         getVideoId: getVideoId,
         setVideoService: setVideoService,
         getVideoService: getVideoService,
+        getVideoDuration: getVideoDuration,
         resizeVideo: resizeVideo,
         setup: setup
     };
