@@ -1,23 +1,57 @@
 .post {
     position:relative;
-    &__wrapper:before {
-        content: attr(data-name);
-        display: inline-block;
-        font-size: 1em;
-        font-weight: normal;
-        padding: 1em 0;
-        position: absolute;
-        right: 50%;
-        vertical-align: middle;
-    }
-    input {
-        width: 45%;
-        position: relative;
-        left: 50%;
-        margin: 1%;
-        resize: none;
-        border: 1px solid #3366FF;
-        border-left: 6px solid #3366FF;
-        padding: 5px;
+
+    border-bottom: 1px solid #CCC;
+
+    &__wrapper {
+        padding: 1em;
+
+        .row {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+
+            input[type=text] {
+                border: 0;
+                border-bottom: 1px solid #CCC;
+                width: 100%;
+                outline: none;
+            }
+
+            label[for=posting-as] {
+                display: block;
+                margin: 0;
+                padding: 0;
+                width: 0;
+                overflow: hidden;
+                font-size: 0.5em;
+                color: #999;
+
+                transition: all 250ms;
+            }
+            input#posting-as {
+                display: block;
+                border: 0;
+                margin-bottom: 0.25em;
+                border-bottom: 1px solid transparent;
+
+                &:hover {
+                    border-bottom: 1px solid #CCC;
+                }
+                &:focus {
+                    border-bottom: 1px solid #999;
+                }
+            }
+
+            input#post-comment {
+                font-size: 1.5em;
+            }
+
+            &:hover {
+                label[for=posting-as] {
+                    width: 5em;
+                }
+            }
+        }
     }
 }
