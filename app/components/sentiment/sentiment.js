@@ -13,6 +13,12 @@ APP.sentiment = (function(){
         return newDataObj;
     };
 
+    var getIntervalObj = function(interval, vote) {
+        var dataObj = {};
+        dataObj[interval] = vote;
+        return dataObj;
+    };
+
     // template
     var voteObj = {
         value: 0,
@@ -22,7 +28,7 @@ APP.sentiment = (function(){
 
     //triggered from $.subscribe vote event
     var postVote = function(event, value) {
-        // console.log(event, value);
+        console.log(event, value);
         //SEND THIS VOTE OFF TO FIREBASE
         $.unsubscribe('/video/currentTime', postVote);
     };
@@ -45,6 +51,7 @@ APP.sentiment = (function(){
     return {
         init: init,
         getNewDataObj: getNewDataObj,
+        getIntervalObj: getIntervalObj,
         postVote: postVote
     };
 
