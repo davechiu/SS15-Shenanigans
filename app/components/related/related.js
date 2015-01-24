@@ -11,7 +11,11 @@ APP.related = (function(){
     var init = function() {
         console.log('APP.related');
 
-        markVideoAsPlaying($('.related ul li:first-child'));
+        $('.related ul li a').each(function(){
+            if($(this).data('videoid') === APP.video.getVideoId()) {
+                markVideoAsPlaying($(this).parent());
+            }
+        });
     };
 
     /**
