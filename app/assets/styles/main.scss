@@ -21,6 +21,7 @@
 // Page-specific overrides for a given component should still be placed in the *component* scss.
 @import "../../components/header/header";
 @import "../../components/video/video";
+@import "../../components/user/onboarding";
 @import "../../components/sentiment/sentiment";
 @import "../../components/related/related";
 @import "../../components/post-comment/post-comment";
