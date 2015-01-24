@@ -5,8 +5,9 @@ var APP = window.APP = window.APP || {};
 APP.global = (function(){
 
     var initGlobalComponents = function() {
-        APP.navigation.init();
+        // APP.navigation.init();
         // APP.footer.init();
+        APP.video.init();
     };
 
     var initPageComponents = function() {
@@ -15,6 +16,10 @@ APP.global = (function(){
 
     var init = function() {
 
+        var defaultVideoId = 'yt_M7lc1UVf-VE';
+        var videoId = (window.getURLParameter('videoId')) ? window.getURLParameter('videoId') : defaultVideoId;
+
+        APP.video.setVideoId(videoId);
         /**
         * initialize global components
         */

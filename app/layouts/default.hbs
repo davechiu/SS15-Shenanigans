@@ -16,17 +16,11 @@
         <!-- endbower -->
         <!-- endbuild -->
 
-        <script src="assets/scripts/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
-        <!-- desktop.css for IE8 and below removes media queries -->
-        <!--[if lt IE 9]>
-        <link rel="stylesheet" href="assets/styles/legacy.css">
-        <![endif]-->
-        <!--[if gt IE 8]><!-->
         <!-- build:css(.tmp) assets/styles/main.css -->
         <link rel="stylesheet" href="assets/styles/main.css">
         <!-- endbuild -->
-        <!--<![endif]-->
 
     </head>
     <body>
@@ -34,11 +28,11 @@
             {{> body }}
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="assets/scripts/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
         <!-- build:js(app/bower_components) assets/scripts/vendor.js -->
         <!-- bower:js -->
+        <script src="bower_components/firebase/firebase-debug.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -47,6 +41,7 @@
         <script src="assets/scripts/util.js"></script>
         <script src="assets/scripts/global.js"></script>
         <script src="pages/home/home.js"></script>
+        <script src="components/video/video.js"></script>
         <!-- endbuild -->
 
     </body>
