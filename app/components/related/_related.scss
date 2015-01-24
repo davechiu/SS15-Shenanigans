@@ -1,0 +1,109 @@
+.related {
+    padding: 1em;
+
+    h2 {
+        margin: 0;
+        margin-bottom: 0.5em;
+        border-bottom: 1px solid #CCC;
+    }
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    ul {
+        font-size: 0;
+    }
+    li {
+        font-size: 1rem;
+        position: relative;
+        margin: 1em 0;
+
+        background-size: cover;
+        background-position: center center;
+
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            position: relative;
+            font-size: 1.5em;
+
+            color: white;
+            height: 20em;
+            width: 100%;
+            display: block;
+
+            background-color: rgba(3, 169, 244, 0.75);
+            transition: background 250ms;
+
+            &:hover {
+                background-color: rgba(2, 119, 189, 0.85);
+            }
+
+            .title {
+                font-size: 2em;
+                position: absolute;
+                top: 0.5em;
+                left: 0.5em;
+                font-weight: 700;
+            }
+            .source {
+                position: absolute;
+                bottom: 1em;
+                left: 1em;
+            }
+            .fa-youtube-play {
+                font-size: 2em;
+                position: absolute;
+                top: 0.5em;
+                right: 0.5em;
+            }
+        }
+
+        &.playing {
+            opacity: 0.5;
+
+            a {
+                color: black;
+                background-color: rgba(153, 153, 153, 0.75);
+
+                &:hover {
+                    background-color: rgba(153, 153, 153, 0.75);
+                }
+
+                &::before {
+                    content: "Playing";
+                    position: absolute;
+                    padding: 0.5em 1em;
+                    background: rgba(0, 0, 0, 0.75);
+                    color: white;
+                    text-decoration: none;
+                    width: 5em;
+                    height: 1.5em;
+                    text-align: center;
+                    top: 0; right: 0; bottom: 0; left: 0;
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+    @include respond-to($mobile) {
+
+    }
+
+    @include respond-to($tablet) {
+
+    }
+
+    @include respond-to($desktop) {
+
+    }
+}
