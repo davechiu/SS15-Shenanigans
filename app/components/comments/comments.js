@@ -20,6 +20,7 @@ APP.comments = (function(){
                 var commentVideoRef = new Firebase(APP.db.getFbBase() + '/comments/' + videoId + '/0');
                 APP.db.push(commentVideoRef, commentObj);
             }
+            loadFeed();
         });
     };
 
@@ -27,9 +28,11 @@ APP.comments = (function(){
         //...
         clearComment();
     };
+
     var clearComment = function() {
         $('#post-comment').val('');
     };
+
     var initPostForm = function(){
         if(APP.user.getName().length) {
             $('input#posting-as').val(APP.user.getName());
@@ -49,11 +52,23 @@ APP.comments = (function(){
         // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});
     };
 
-    var getVoteObj = function(interval, vote) {
+    var loadFeed = function(){
+        commentRef.once('value', function(allMessagesSnapshot) {
+            allMessagesSnapshot.forEach(function(messageSnapshot) {
+                // Will be called with a messageSnapshot for each message under message_list.
+                var userId = messageSnapshot.child('user_id').val();
+                var text = messageSnapshot.child('text').val();
+                // Do something with message.
+
+            });
+        });
+    };
+
+    var getCommentObj = function(interval, comment) {
         var dataObj = {};
         dataObj = {
             // uid: userID,
-            value: vote,
+            comment: comment,
             time: interval,
             dt: (new Date()).getTime()
         };
@@ -65,9 +80,10 @@ APP.comments = (function(){
         var interval = value;
         var commentRefUrl = APP.db.getFbBase() + '/comments/' + videoId + '/' + interval;
         var refComment = new Firebase(commentRefUrl);
-        APP.db.push(refComment  , getVoteObj(interval, tempCommentValue));
         //just track the sum?
         $.unsubscribe('/video/currentTime', postComment);
+        // push and clear
+        APP.db.push(refComment, getCommentObj(interval, tempCommentValue));
         clearComment();
     };
 
@@ -75,7 +91,6 @@ APP.comments = (function(){
         $('form#postcomment').submit(function(event){
             event.preventDefault();
             tempCommentValue = $('#post-comment').val();
-            console.log('bindComment: '+tempCommentValue);
             $.subscribe('/video/currentTime', APP.comments.postComment);
         });
 
