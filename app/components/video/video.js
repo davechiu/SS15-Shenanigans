@@ -9,9 +9,14 @@ APP.video = (function(){
     var videoRatio = 390/640;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
 
+    var getIntervalObj = function(interval, vote) {
+        var dataObj = {};
+        dataObj[interval] = vote;
+        return dataObj;
+    };
+
     var setup = function(){
         // get or create video record on FB
-        console.log(APP.video.getVideoId(), 'get this id');
         videosRef.once('value', function(snapshot){
             var exists = snapshot.child(videoId).exists();
             if(exists) {
@@ -21,7 +26,8 @@ APP.video = (function(){
                 // create a new empty data structure based on new video Id
                 var vidId = APP.video.getVideoId();
                 var dataObj = {};
-                dataObj[vidId] = {'votes': {0:0}};
+                var intervalObj = getIntervalObj(0,0);
+                dataObj[vidId] = {'votes': intervalObj}; //KB: store user at the vote level?
                 APP.db.set(videosRef, dataObj);
             }
 
