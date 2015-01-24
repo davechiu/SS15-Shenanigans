@@ -83,7 +83,7 @@ APP.video = (function(){
                     var duration = window.player.getDuration();
                     var currentTime = window.player.getCurrentTime();
                     //console.log(current_time);
-                    $.publish("/video/currentTime", window.secToMillisec(currentTime));
+                    $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, 500);
             } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
