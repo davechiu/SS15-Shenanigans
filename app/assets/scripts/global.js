@@ -19,6 +19,7 @@ APP.global = (function(){
         // APP.navigation.init();
         // APP.footer.init();
         APP.video.init();
+        APP.sentiment.init();
         // APP.db.init();
     };
 

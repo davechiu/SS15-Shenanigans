@@ -19,12 +19,11 @@ APP.db = (function(){
         eT: (new Date()).getTime() //epochTime
     };
 
-    var onComplete = function(error) {
-        if (error) {
-            console.log('Synchronization failed');
-        } else {
-            console.log('Synchronization succeeded');
-        }
+    //triggered from $.subscribe vote event
+    var postVote = function(event, value) {
+        // console.log(event, value);
+        //SEND THIS VOTE OFF TO FIREBASE
+        $.unsubscribe('/video/currentTime', postVote);
     };
 
     var set = function(ref, value) {
@@ -39,12 +38,21 @@ APP.db = (function(){
         dataObj = obj;
     };
 
+
+    var onComplete = function(error) {
+        if (error) {
+            console.log('Synchronization failed');
+        } else {
+            console.log('Synchronization succeeded');
+        }
+    };
+
     var init = function() {
 
+        //check to see if there is a new video - not pushing data yet.
         var vId = APP.video.getVideoId();
         fbRef.once('value', function(snapshot){
             var exists = snapshot.child(vId).exists();
-
             if(exists) {
                 // store the entire object in the APP.db name
             } else {
@@ -70,7 +78,10 @@ APP.db = (function(){
     * interfaces to public functions
     */
     return {
-        init: init
+        init: init,
+        setDataObj: setDataObj,
+        getDataObj: getDataObj,
+        postVote: postVote
     };
 
 }());
