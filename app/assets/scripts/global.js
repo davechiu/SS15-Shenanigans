@@ -16,8 +16,8 @@ APP.global = (function(){
     var initGlobalComponents = function() {
         // APP.navigation.init();
         // APP.footer.init();
-        APP.db.init();
         APP.video.init();
+        APP.db.init();
     };
 
     var initPageComponents = function() {
