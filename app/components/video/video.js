@@ -4,24 +4,9 @@ var APP = window.APP = window.APP || {};
 
 APP.video = (function(){
     var videoId;
-
-    var getVideoId = function(){
-        return videoId;
-    }
-
-    var setVideoId = function(id) {
-        videoId = id;
-    };
-
-    var init = function() {
-        console.log('APP.video');
-        bindEventsToUI();
-
-        initYouTube();
-    };
+    var videoService;
 
     var initYouTube = function(){
-        console.log(defaultVideoId);
 
         // 2. This code loads the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
@@ -38,7 +23,7 @@ APP.video = (function(){
             window.player = new window.YT.Player('player', {
                 height: '390',
                 width: '640',
-                videoId: 'M7lc1UVf-VE',
+                videoId: APP.video.getVideoId(),
                 events: {
                     'onReady': window.onPlayerReady,
                     'onStateChange': window.onPlayerStateChange
@@ -64,7 +49,29 @@ APP.video = (function(){
         window.stopVideo = function() {
             window.player.stopVideo();
         };
-    }
+    };
+
+    var getVideoId = function(){
+        return videoId;
+    };
+
+    var setVideoId = function(id) {
+        videoId = id;
+    };
+
+    var getVideoService = function(){
+        return videoService;
+    };
+
+    var setVideoService = function(str) {
+        videoService = str;
+    };
+
+    var init = function() {
+        console.log('APP.video');
+
+        initYouTube();
+    };
 
     /**
      * interfaces to public functions
@@ -72,7 +79,9 @@ APP.video = (function(){
     return {
         init: init,
         setVideoId: setVideoId,
-        getVideoId: getVideoId
+        getVideoId: getVideoId,
+        setVideoService: setVideoService,
+        getVideoService: getVideoService
     };
 
 }());
