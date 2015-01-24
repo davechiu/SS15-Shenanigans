@@ -20,10 +20,12 @@ APP.global = (function(){
         var bananas = "66,65,78,65,78,65,83";
 
         $(document).keydown(function(e) {
-            kkeys.push( e.keyCode );
-            if ( kkeys.toString().indexOf( bananas ) >= 0 ){
-                $(document).unbind('keydown');
-                window.location = '?v=yt_nBJV56WUDng';
+            if (!$(e.target).is('input, textarea')) {
+                kkeys.push( e.keyCode );
+                if ( kkeys.toString().indexOf( bananas ) >= 0 ){
+                    $(document).unbind('keydown');
+                    window.location = '?v=yt_nBJV56WUDng';
+                }
             }
         });
 

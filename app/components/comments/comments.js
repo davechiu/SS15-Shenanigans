@@ -56,7 +56,9 @@ APP.comments = (function(){
     };
 
     var initPostForm = function(){
-        $('input#posting-as').val(APP.user.getName());
+        if(APP.user.getName().length) {
+            $('input#posting-as').val(APP.user.getName());
+        }
         $('form.comment-form').on('submit', function(e){
             e.preventDefault();
 

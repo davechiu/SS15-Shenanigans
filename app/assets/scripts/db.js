@@ -6,9 +6,9 @@ var APP = window.APP = window.APP || {};
 
 APP.db = (function(){
 
-    var base = 'https://shenan-athon.firebaseio.com/';
     // var base = 'https://shenanigans.firebaseio.com/';
-    //var base = 'https://shenanigans-kb.firebaseio.com/';
+    var base = 'https://shenanigans-kb.firebaseio.com';
+    // var base = 'https://shenan-athon.firebaseio.com/';
     // var fbRef = new Firebase(base);
     // var votesRef = new Firebase(base + '/votes');
     // var userRef = new Firebase(base + '/users');
@@ -16,8 +16,16 @@ APP.db = (function(){
     // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
     var dataObj = {};
 
+    var update = function(ref, value) {
+        ref.update(value, onComplete);
+    };
+
     var set = function(ref, value) {
         ref.set(value, onComplete);
+    };
+
+    var push = function(ref, value) {
+        ref.push(value, onComplete);
     };
 
     var getFbBase = function() {
@@ -52,7 +60,9 @@ APP.db = (function(){
         getFbBase: getFbBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
-        set: set
+        set: set,
+        push: push,
+        update: update
     };
 
 }());
