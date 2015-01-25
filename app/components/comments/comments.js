@@ -88,6 +88,7 @@ APP.comments = (function(){
                 console.log('load time: '+val.time);
                 console.log('load dt: '+val.dt);
                 */
+                // don't put an empty value in our list
                 if(val.time !== 0) {
                     // cache time values with comment ID for show comment trigger
                     var commentInstance = { time: val.time, id: key };
@@ -97,9 +98,13 @@ APP.comments = (function(){
                     if(val.uuid === APP.user.getUUID()) {
                         yourComment = ' yours';
                     }
+                    var storage = '';
+                    if(lastTimeRef === 0){
+                        storage = ' storage';
+                    }
 
                     if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                        var li = '<li class="comment storage new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
+                        var li = '<li class="comment new'+yourComment+storage+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
 
                         $('.comment-feed ul').prepend(li);
                         setTimeout(function(){
@@ -135,12 +140,21 @@ APP.comments = (function(){
     var triggerShowComment = function() {
         var currentTimeMil = currentTime * 1000;
         //console.log('timeCache: '+JSON.stringify(timeCache));
-        // console.log('last: '+lastTimeRef+' currentTimeMil: '+currentTimeMil);
+        //console.log('last: '+lastTimeRef+' currentTimeMil: '+currentTimeMil);
         $.each(timeCache, function(key, data) {
-            if(data.time > lastTimeRef && data.time <= currentTimeMil){
+            //console.log(data.time+' > '+lastTimeRef+' && '+data.time+' <= '+currentTimeMil);
+
+            // if the object was removed move on to the next object
+            if(data === null ) { return; }
+            // if the time is between the last and current time stamp
+            //  show this element and remove it from the object
+            // otherwise kill the loop
+            if(lastTimeRef < data.time && currentTimeMil >= data.time){
                 // delete myObj.test[keyToDelete];
-                $('[data-cuid="'+data.id+'"]').removeClass('hide');
-                console.log('data-cuid="'+data.id+'].removeClass');
+                var show = $('[data-cuid="'+data.id+'"]');
+                show.removeClass('storage');
+                setTimeout(function(){ show.delay(150).removeClass('new'); }, 150);
+                timeCache[key] = null;
             }else{
                 return false;
             }
