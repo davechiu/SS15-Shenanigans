@@ -21,7 +21,8 @@ APP.related = (function(){
             html += '<a href="'+href+'" data-videoid="'+elem.videoId+'">';
             html += '<i class="fa fa-youtube-play"></i>';
             html += '<div class="title">'+elem.title+'</div>';
-            html += '<div class="source">'+elem.source+'</div></a></li>';
+            html += '<div class="source">'+elem.source+'</div></a>';
+            html += '</li>';
             playing = '';
         });
         return html;
