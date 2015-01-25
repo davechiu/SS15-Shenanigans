@@ -12,9 +12,12 @@
     border-radius: 2px;
     box-shadow: 0 0.5em 1em rgba(0,0,0,0.25), 0 0 0 5000px rgba(0,0,0,0.5);
 
+    font-size: 0.75em;
+
     @include respond-to($tablet) {
         width: 20em;
         height: 15em;
+        font-size: 1em;
     }
 
     .wrapper {

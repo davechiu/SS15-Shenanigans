@@ -98,9 +98,9 @@
     Share.prototype.init = function(settings) {
         // init share bar
 
-        if (!$(this.$sharebar).hasClass('flag-share')) {
+        if (!$(this.$sharebar).hasClass('dc-share')) {
 
-            $(this.$sharebar).addClass('flag-share').data('shareInstanceId', this.instanceId);
+            $(this.$sharebar).addClass('dc-share').data('shareInstanceId', this.instanceId);
             this.buildLinks(settings);
 
         }
@@ -113,7 +113,7 @@
         var defaultNetworkOptions = this.networkDefaults;
 
         // build container to hold share items
-        var shareBar = $(document.createElement(buildOptions.wrapper)).addClass('flag-share__share-bar');
+        var shareBar = $(document.createElement(buildOptions.wrapper)).addClass('dc-share__share-bar');
 
         // build a label if needed
         if (buildOptions.shareBarLabel !== null) {
@@ -122,8 +122,8 @@
                 buildOptions.shareBarLabel = $(document.createTextNode(buildOptions.shareBarLabel));
             }
 
-            var shareLabel = $(document.createElement(buildOptions.itemWrapper)).addClass('flag-share__item flag-share__item--label').append(
-                $(document.createElement('span')).addClass('flag-share__label').append(buildOptions.shareBarLabel.clone())
+            var shareLabel = $(document.createElement(buildOptions.itemWrapper)).addClass('dc-share__item dc-share__item--label').append(
+                $(document.createElement('span')).addClass('dc-share__label').append(buildOptions.shareBarLabel.clone())
             );
 
             shareBar.append(shareLabel);
@@ -150,14 +150,14 @@
                 networkParameters.display = $(document.createTextNode(networkParameters.display));
             }
 
-            var $shareItem = $(document.createElement(buildOptions.itemWrapper)).addClass('flag-share__item ' + 'flag-share__item--'+this.network);
+            var $shareItem = $(document.createElement(buildOptions.itemWrapper)).addClass('dc-share__item ' + 'dc-share__item--'+this.network);
             var $shareLink = $(document.createElement('a'))
-                                .addClass('flag-share__link ' + 'flag-share__link--'+this.network)
+                                .addClass('dc-share__link ' + 'dc-share__link--'+this.network)
                                 .attr({
                                     name: networkParameters.name,
                                     href: networkParameters.shareLinkTemplate
                                             .replace(/{link}/g, encodeURIComponent(buildOptions.link))
-                                            .replace(/{tweet}/g, encodeURI( ((networkParameters !== null && typeof networkParameters.tweet !== 'undefined')?( $.trim(networkParameters.tweet)+' '):'') ).replace("#", "%23") + encodeURIComponent(buildOptions.link))
+                                            .replace(/{tweet}/g, encodeURI( ((networkParameters !== null && typeof networkParameters.tweet !== 'undefined')?( $.trim(networkParameters.tweet)+' '):'') ).replace(new RegExp('#', 'g'),'%23') + encodeURIComponent(buildOptions.link))
                                             .replace(/{title}/g, encodeURI(buildOptions.title))
                                             .replace(/{imageUrl}/g, encodeURIComponent(buildOptions.image))
                                             .replace(/{description}/g, encodeURI(buildOptions.description)),
@@ -170,9 +170,9 @@
                                     type: buildOptions.type
                                 })
                                 .append(
-                                    $(document.createElement('span')).addClass('flag-share__count').data('shareCountThreshold',buildOptions.shareCountThreshold),
-                                    $(document.createElement('span')).addClass('flag-share__display').append(networkParameters.display.clone()),
-                                    $(document.createElement('span')).addClass('flag-share__ada-text ' + buildOptions.adaClassName).text(buildOptions.adaText)
+                                    $(document.createElement('span')).addClass('dc-share__count').data('shareCountThreshold',buildOptions.shareCountThreshold),
+                                    $(document.createElement('span')).addClass('dc-share__display').append(networkParameters.display.clone()),
+                                    $(document.createElement('span')).addClass('dc-share__ada-text ' + buildOptions.adaClassName).text(buildOptions.adaText)
                                 )
                                 .on('click', function(e){
                                     // are we opening a popup?
@@ -202,10 +202,10 @@
                             },
                             dataType: 'jsonp'
                         }).done($.proxy(function(result){
-                            if(parseInt(result.shares) >= $(this).find('.flag-share__count').data('shareCountThreshold')) {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--above-threshold').text(result.shares);
+                            if(parseInt(result.shares) >= $(this).find('.dc-share__count').data('shareCountThreshold')) {
+                                $(this).find('.dc-share__count').addClass('dc-share__count--above-threshold').text(result.shares);
                             } else {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--below-threshold');
+                                $(this).find('.dc-share__count').addClass('dc-share__count--below-threshold');
                             }
                         },$shareItem));
                         break;
@@ -219,10 +219,10 @@
                             },
                             dataType: 'jsonp'
                         }).done($.proxy(function(result){
-                            if(parseInt(result.count) >= $(this).find('.flag-share__count').data('shareCountThreshold')) {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--above-threshold').text(result.count);
+                            if(parseInt(result.count) >= $(this).find('.dc-share__count').data('shareCountThreshold')) {
+                                $(this).find('.dc-share__count').addClass('dc-share__count--above-threshold').text(result.count);
                             } else {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--below-threshold');
+                                $(this).find('.dc-share__count').addClass('dc-share__count--below-threshold');
                             }
                         },$shareItem));
                         break;
@@ -237,10 +237,10 @@
                             },
                             dataType: 'jsonp'
                         }).done($.proxy(function(result){
-                            if(parseInt(result.count) >= $(this).find('.flag-share__count').data('shareCountThreshold')) {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--above-threshold').text(result.count);
+                            if(parseInt(result.count) >= $(this).find('.dc-share__count').data('shareCountThreshold')) {
+                                $(this).find('.dc-share__count').addClass('dc-share__count--above-threshold').text(result.count);
                             } else {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--below-threshold');
+                                $(this).find('.dc-share__count').addClass('dc-share__count--below-threshold');
                             }
                         },$shareItem));
                         break;
@@ -254,10 +254,10 @@
                             },
                             dataType: 'jsonp'
                         }).done($.proxy(function(result){
-                            if(parseInt(result.count) >= $(this).find('.flag-share__count').data('shareCountThreshold')) {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--above-threshold').text(result.count);
+                            if(parseInt(result.count) >= $(this).find('.dc-share__count').data('shareCountThreshold')) {
+                                $(this).find('.dc-share__count').addClass('dc-share__count--above-threshold').text(result.count);
                             } else {
-                                $(this).find('.flag-share__count').addClass('flag-share__count--below-threshold');
+                                $(this).find('.dc-share__count').addClass('dc-share__count--below-threshold');
                             }
                         },$shareItem));
                         break;
@@ -290,7 +290,7 @@
 
     // Static method.
     $.share = function (options) {
-        console.log('flag-share: incorrect invocation');
+        console.log('dc-share: incorrect invocation');
     };
 
 

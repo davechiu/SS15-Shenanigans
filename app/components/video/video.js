@@ -214,7 +214,9 @@ APP.video = (function(){
         $(window).on('resize', function(){
             APP.video.resizeVideo($('.content .card .video iframe'));
         });
-        $(window).trigger('resize');
+        window.wt = setTimeout(function(){
+            $(window).trigger('resize');
+        },500);
 
         initEndCard();
     };

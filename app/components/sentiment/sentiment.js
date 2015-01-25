@@ -256,6 +256,18 @@ APP.sentiment = (function(){
             $('.sentiment .actions a.positive').text(thisVideoObj.sentiment.positive);
             $('.sentiment .actions a.negative').text(thisVideoObj.sentiment.negative);
         }
+
+        $('.sentiment .share').share({
+
+            showShareCount: false,
+            networks: [
+                {
+                    network: 'twitter',
+                    display: $(document.createElement('i')).addClass('fa fa-twitter'),
+                    tweet: $('.sentiment h1 .pri').text() + ' #React #StaticShowdown'
+                }
+            ]
+        });
     };
 
     var init = function() {
