@@ -59,7 +59,8 @@ APP.sentiment = (function(){
             chart: {
                 type: 'spline',
                 animation: window.Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
+                marginRight: 0,
+                marginLeft: 0,
                 events: {
                     load: function () {
 
@@ -78,7 +79,10 @@ APP.sentiment = (function(){
             },
             xAxis: {
                 type: '',
-                tickPixelInterval: 150
+                tickPixelInterval: 150,
+                labels: {
+                    enabled: false
+                }
             },
             yAxis: {
                 title: {

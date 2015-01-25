@@ -2,9 +2,8 @@
     position: relative;
 
     .wrapper {
-        padding: 1em 3em;
+        //padding: 1em 1em;
         position: relative;
-        min-height: 10em;
     }
 
     h1 {
@@ -14,34 +13,39 @@
         line-height: 1.1;
         font-size: 2em;
         padding: 0.5em;
-        border-bottom: 1px solid #CCC;
+        border-bottom: 1px solid #EEE;
     }
 
-    .chart {
-        width: 95%;
+    #chart {
+        width: 100%;
         margin: 0 auto;
-        min-height: 200px;
+        height: 100px;
         position: relative;
         background: white;
     }
 
+    .actions {
+        font-size: 0em;
+        border-bottom: 1px solid #CCC;
+    }
+
     a.btn {
+        $btn_color_positive: #F06292;
+        $btn_color_negative: #D81B60;
 
-        $btn_color_positive: #4CAF50;
-        $btn_color_negative: #F44336;
-
-        position: absolute;
-        top: 45%;
-        margin-top: -1em;
+        width: 27%;
+        padding: 2% 10%;
+        margin: 2%;
         z-index: 999;
+        display: inline-block;
 
-        padding: 0.5em 1em;
         border: 0;
         background: transparent;
         outline: none;
-        font-size: 2em;
+        font-size: 4rem;
         color: white;
         text-decoration: none;
+        text-align: center;
         box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.25);
 
         transition: all 250ms;
@@ -58,11 +62,7 @@
 
         &.positive {
             background: $btn_color_positive;
-            left: 0;
-
-            @include respond-to($desktop) {
-                left: -1em;
-            }
+            margin-right: 1%;
 
             &:hover, &:focus {
                 background: darken($btn_color_positive, 5%);
@@ -74,11 +74,7 @@
         }
         &.negative {
             background: $btn_color_negative;
-            right: 0;
-
-            @include respond-to($desktop) {
-                right: -1em;
-            }
+            margin-left: 1%;
 
             &:hover, &:focus {
                 background: darken($btn_color_negative, 5%);
