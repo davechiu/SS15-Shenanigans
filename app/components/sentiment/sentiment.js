@@ -105,15 +105,23 @@ APP.sentiment = (function(){
                         var interval = 0;
                         setInterval(function () {
                             //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            var tmpArr = getTransformedArr();
-                            if(tmpArr[0].x === interval || tmpArr[0].x === 0) {
-                                var tmpVals = tmpArr.shift();
-                                console.log([tmpVals.x, tmpVals.y]);
-                                setTransformedArr(tmpArr);
-                                series.addPoint([tmpVals.x, tmpVals.y]);
+                            if(APP.video.getPlayerStatus() === 'playing') {
+                                var tmpArr = getTransformedArr();
+                                if(tmpArr.length && (tmpArr[0].x === interval || tmpArr[0].x === 0) ) {
+                                    // time sync'd sorta.
+                                    var tmpVals = tmpArr.shift();
+                                    console.log([tmpVals.x, tmpVals.y]);
+                                    setTransformedArr(tmpArr);
+                                    series.addPoint([tmpVals.x, tmpVals.y]);
+                                } else {
+                                    // no data? value is 0
+                                    series.addPoint([interval, 0]);
+                                }
+                                // debugger;
+                                if(APP.video.getPlayerStatus() === 'playing') {
+                                    interval += 100;
+                                }
                             }
-                            // debugger;
-                            interval += 100;
                         }, 100);
                     }
                 }

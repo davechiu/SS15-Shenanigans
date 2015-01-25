@@ -12,6 +12,7 @@ APP.video = (function(){
     var videoRatio = 390/640;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
     var videoDuration;
+    var playerState; // playing | paused | ended
 
     var setup = function(){
         // get or create video record on FB
@@ -88,12 +89,15 @@ APP.video = (function(){
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, APP.global.getRefresh());
+                playerState = 'playing';
                 window.ga('send', 'event', 'video', 'playing', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.PAUSED) {
                 clearInterval(window.refreshIntervalId);
+                playerState = 'paused';
                 window.ga('send', 'event', 'video', 'paused', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
+                playerState = 'ended';
                 window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
                 // APP.video.openEndCard();
             }
@@ -139,6 +143,10 @@ APP.video = (function(){
 
     var getVideoDuration = function(){
         return videoDuration;
+    };
+
+    var getPlayerStatus = function(){
+        return playerState;
     };
 
     var initEndCard = function() {
@@ -209,6 +217,7 @@ APP.video = (function(){
         setVideoService: setVideoService,
         getVideoService: getVideoService,
         getVideoDuration: getVideoDuration,
+        getPlayerStatus: getPlayerStatus,
         resizeVideo: resizeVideo,
         replayVideo: replayVideo,
         closeEndCard: closeEndCard,
