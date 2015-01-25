@@ -13,6 +13,7 @@ APP.related = (function(){
             href = '?v=yt_'+elem.videoId; //default
 
             if (elem.videoId === APP.video.getVideoId()) {
+                // debugger;
                 playing = 'class="playing"';
                 href = '#';
             }
@@ -21,6 +22,7 @@ APP.related = (function(){
             html += '<i class="fa fa-youtube-play"></i>';
             html += '<div class="title">'+elem.title+'</div>';
             html += '<div class="source">'+elem.source+'</div></a></li>';
+            playing = '';
         });
         return html;
     };
