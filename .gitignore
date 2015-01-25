@@ -1,4 +1,4 @@
-dist
+.divshot-cache
 .tmp
 .sass-cache
 *.sublime-project

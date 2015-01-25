@@ -1,0 +1,169 @@
+<!--[if IE]><![endif]-->
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>REACT - Measuring Real-time Sentiment | Static Showdown 2015</title>
+        <meta name="description" content="React lets you vote and comment on videos in Warped Time, everyone experiences it as if it was being broadcasted live!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+        <link rel="stylesheet" href="assets/styles/288b8999.main.css"/>
+
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:700,400);" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Shadows+Into+Light" />
+
+    </head>
+    <body>
+        <header>
+	<p><strong><i class="fa fa-line-chart"></i> React</strong> <small>Measuring Real-time Sentiment</small></p>
+</header>
+
+        <div class="wrapper">
+            <div class="js-page-controller-action home-page" data-action-name="home">
+    <div class="content">
+
+    	<div class="card">
+        	<div class="video">
+
+	<div id="onboarding">
+	<div class="nametag">
+		<div class="nametag__top">
+			<p>
+				<strong>Hello</strong>
+				<small>my name is</small>
+			</p>
+		</div>
+		<div class="nametag__middle">
+			<form name="intake" id="intake">
+				<label for="user_name" class="accessibility-hidden">Full Name</label>
+				<input type="text" id="user_name" name="user_name" type="text" />
+				<input type="submit" value="Join The Conversation" />
+			</form>
+		</div>
+	</div>
+</div>
+
+	<div id="endcard">
+	<div class="next">Play next video: <span class="nextVideo"></span></div>
+	<div class="play"><a href="#"><i class="fa fa-youtube-play"></i></a></div>
+	<div class="nextCountdown" data-prefix=":"></div>
+	<div class="replay">or <a href="#">reply current video</a>.</div>
+</div>
+
+	<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+	<div id="player"></div>
+
+
+</div>
+
+        </div>
+
+    	<div class="card">
+        	<div class="sentiment">
+	<h1>
+		<div class="pri">Do you like this?</div>
+		<div class="alt">How about now?</div>
+	</h1>
+	<div class="share"></div>
+	<div class="actions">
+		<a href="#" class="btn positive" data-value="1"><i class="fa fa-thumbs-up"></i></a>
+		<a href="#" class="btn negative" data-value="-1"><i class="fa fa-thumbs-down"></i></a>
+	</div>
+	<div class="wrapper">
+        <div id="chart"></div>
+	</div>
+</div>
+
+        </div>
+
+    	<div class="card">
+            <div class="comments">
+	<div class="post">
+	<div data-name="Error" class="post__wrapper">
+		<div class="row">
+			<form id="postname" class="comment-form" name="comment-name">
+				<label for="posting-as" class="">Posting as <i class="fa fa-pencil"></i></label>
+				<input type="text" id="posting-as" name="posting-as" value="" />
+				<input type="submit" class="accessibility-hidden" hidefocus="true" />
+			</form>
+		</div>
+		<div class="row">
+			<form id="postcomment" class="comment-form" name="comment-form">
+				<label for="post-comment" class="accessibility-hidden">Comment</label>
+				<input type="text" id="post-comment" name="post-comment" maxlength="80" placeholder="What do you think?" />
+				<input type="submit" class="accessibility-hidden" hidefocus="true" />
+				<a href="#" class="mobileSubmit"><i class="fa fa-paper-plane"></i></a>
+			</form>
+		</div>
+	</div>
+</div>
+
+	<div class="comment-feed">
+	<ul></ul>
+</div>
+
+</div>
+
+        </div>
+
+    	<div class="card">
+        	<div class="related">
+	<h2>Watch More</h2>
+	<div class="wrapper">
+		<ul>
+		</ul>
+	</div>
+</div>
+        </div>
+
+    </div>
+</div>
+
+        </div>
+
+        <div class="modal">
+	<div class="wrapper">
+		<div class="heading">
+			<p><strong>Wait!</strong></p>
+		</div>
+		<div class="copy">
+			<p>Do not pass Go! Do not collect 200 dollars!</p>
+		</div>
+		<div class="actions">
+			<a href="#" class="btn cancel">Cancel</a>
+			<a href="#" class="btn ok">Ok</a>
+		</div>
+	</div>
+</div>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="//cdn.firebase.com/js/client/2.1.1/firebase-debug.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js"></script>
+
+        <script src="assets/scripts/802c6457.vendor.js"></script>
+
+        <script src="assets/scripts/cf8f4fce.main.js"></script>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-58925052-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+
+    </body>
+</html>
