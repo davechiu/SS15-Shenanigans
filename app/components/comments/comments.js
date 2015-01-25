@@ -46,6 +46,11 @@ APP.comments = (function(){
             console.log('submit comment');
             // DO COMMENT SUBMISSION
         });
+        $('a.mobileSubmit').on('click',function(e){
+            e.preventDefault();
+            // submit button for mobile, this is not the input[type=submit] becuase we want a nice icon, can't do ::before in an input.
+            $('form.comment-form').trigger('submit');
+        });
 
         $('input#posting-as').on('change', function(){
             APP.user.setName($('input#posting-as').val());
@@ -71,8 +76,12 @@ APP.comments = (function(){
                 console.log('load dt: '+val.dt);
                 */
                 if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                    var li = '<li class="comment" data-uid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
+                    var li = '<li class="comment new" data-uid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+key+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
+
                     $('.comment-feed ul').prepend(li);
+                    setTimeout(function(){
+                        $('.comment-feed ul li.new').removeClass('new');
+                    }, 150);
                 }
             });
         });

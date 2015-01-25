@@ -5,6 +5,8 @@
 var APP = window.APP = window.APP || {};
 
 APP.video = (function(){
+    var _ = window._;
+
     var videoId;
     var videoService;
     var videoRatio = 390/640;
@@ -86,8 +88,11 @@ APP.video = (function(){
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, APP.global.getRefresh());
-            } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
                 clearInterval(window.refreshIntervalId);
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+                clearInterval(window.refreshIntervalId);
+                APP.video.openEndCard();
             }
         };
         window.stopVideo = function() {
@@ -133,6 +138,45 @@ APP.video = (function(){
         return videoDuration;
     };
 
+    var initEndCard = function() {
+        var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
+        var nextIndex = featuredIndex + 1;
+        if (nextIndex === APP.db.getFeaturedVideosArr().length) {
+            nextIndex = 0;
+        }
+
+        var nextVideoObj = APP.db.getFeaturedVideosArr()[nextIndex];
+        $('#endcard .next .nextVideo').text(nextVideoObj.title);
+        $('#endcard .play a').attr('href','?v=yt_'+nextVideoObj.videoId);
+
+        $('#endcard .replay a').on('click',function(e){
+            e.preventDefault();
+            APP.video.closeEndCard();
+            APP.video.replayVideo();
+        });
+
+    };
+
+    var openEndCard = function() {
+        $('#endcard').fadeIn('fast');
+
+        window.countDown($('#endcard .nextCountdown'), 15, 15000);
+        window.nvt = setTimeout(function(){
+            location.href = $('#endcard .play a').attr('href');
+        },15000);
+    };
+
+    var replayVideo = function() {
+        clearTimeout(window.nvt);
+
+        window.player.seekTo(0);
+        window.player.playVideo();
+    };
+
+    var closeEndCard = function() {
+        $('#endcard').fadeOut('fast');
+    };
+
     var init = function() {
         console.log('APP.video');
 
@@ -142,9 +186,10 @@ APP.video = (function(){
         APP.comments.init();
         $(window).on('resize', function(){
             APP.video.resizeVideo($('.content .card .video iframe'));
-
         });
         $(window).trigger('resize');
+
+        initEndCard();
     };
 
     /**
@@ -158,6 +203,9 @@ APP.video = (function(){
         getVideoService: getVideoService,
         getVideoDuration: getVideoDuration,
         resizeVideo: resizeVideo,
+        replayVideo: replayVideo,
+        closeEndCard: closeEndCard,
+        openEndCard: openEndCard,
         setup: setup
     };
 
