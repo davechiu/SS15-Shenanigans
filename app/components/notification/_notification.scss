@@ -1,7 +1,10 @@
 .notification {
 	background: $pri-color-dark;
 	color: white;
-	border-radius: 2px;
+
+    @include respond-to(815px) {
+	 	border-radius: 2px;
+    }
 
 	.wrapper {
 		padding: 1em 3em 1em 1em;
