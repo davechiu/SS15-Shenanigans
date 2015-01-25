@@ -74,59 +74,14 @@ APP.sentiment = (function(){
             _.transform(playerDataSnapshot.val(), function(result, num, key){
                 //console.log(num.time, num.value, '-----');
                 var tempObj = {};
-                var arrIndex = _.findIndex(transformedArr, {"time":num.time});
+                var arrIndex = _.findIndex(cleanPlayerData, {'x':num.time});
                 if(arrIndex === -1) {
                     // create new
-                    transformedArr.push({"time":num.time, value:num.value});
+                    cleanPlayerData.push({'x':num.time, 'y':num.value});
                 } else {
                     // already exists, add to it
-                    transformedArr[arrIndex].value = transformedArr[arrIndex].value+num.value
+                    cleanPlayerData[arrIndex].value = cleanPlayerData[arrIndex].value + num.value;
                 }
-
-            });
-
-            //console.log(playerDataSnapshot.val(),'psd val');
-            // 2. handle each interval individually
-            var i = 0;
-            $.each(playerDataSnapshot.val(), function(name, elem){
-                console.log(elem, i);
-                //check for repeats
-                var data = {x: null, y: null};
-                if(i > 0) {
-                } else {
-                }
-                cleanPlayerData.push(data);
-                i++;
-            // playerDataSnapshot.forEach(function(snapshot){ //:-| wtf w/ these params... (useless but required?)
-            // for(var i = 0, len = playerDataSnapshot.length; i < len; i++) {
-            //     // debugger;
-            //     // console.log(i, elem.time, elem.value, elem, arr);
-            //     var elem = this.val();
-            //     var key = this.key();
-            //     // console.log(elem, key);
-            //     console.log(this, i);
-            //     for(var j = 0, len = this.length; j < len; j++) {
-
-            //         console.log(this, j);
-            //         // if( --i > 0 && cleanPlayerData[--i].x === elem.time) {
-            //         //     //look to last index to see if we can consolidate the data points together
-            //         //     cleanPlayerData[i].x = elem.time;
-            //         //     cleanPlayerData[i].y = movement(cleanPlayerData[--i].value, elem.value);
-            //         // } else if( --i > 0 && cleanPlayerData[--i].x !== elem.time) {
-            //         //     cleanPlayerData[i].x = elem.time;
-            //         //     cleanPlayerData[i].y = elem.value;
-            //         // } else {
-            //         //     var data = {x: elem.time, y: elem.value};
-            //         //     cleanPlayerData.push(data);
-            //         // }
-            //     }
-
-            // };
-            // playerDataSnapshot.forEach(function(snapshot) {
-            //     // 3. extract values from children
-            //     var key = snapshot.key();
-            //     var val = snapshot.val();
-            //     console.log(key, val, 'keyval');
             });
         });
     };
@@ -151,7 +106,6 @@ APP.sentiment = (function(){
                 marginLeft: 0,
                 events: {
                     load: function () {
-
                         // set up the updating of the chart each second
                         var series = this.series[0];
                         setInterval(function () {
@@ -242,7 +196,7 @@ APP.sentiment = (function(){
 
     var getTransformedArr = function() {
         return transformedArr;
-    }
+    };
 
     var initQnA = function() {
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
