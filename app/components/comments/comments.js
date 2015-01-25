@@ -11,10 +11,13 @@ APP.comments = (function(){
 
     var setup = function(){
         // get or create video record on FB
-        commentRef.once('value', function(snapshot){
-            var exists = snapshot.child(videoId).exists();
+        commentRef.child(videoId).once('value', function(snapshot){
+            var exists = snapshot.exists();
             if(exists) {
-                APP.db.setDataObj(exists);
+                var commentsData = {};
+                commentsData.comments = {};
+                commentsData.comments[videoId] = snapshot.val();
+                APP.db.setDataObj(commentsData);
             } else {
                 var commentObj = APP.sentiment.getVoteObj(0, 0);
                 var commentVideoRef = new Firebase(APP.db.getFbBase() + '/comments/' + videoId + '/0');
