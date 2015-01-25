@@ -75,7 +75,7 @@ APP.comments = (function(){
                 console.log('load time: '+val.time);
                 console.log('load dt: '+val.dt);
                 */
-                console.log(val);
+
                 if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
                     var li = '<li class="comment new" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
 
