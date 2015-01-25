@@ -13,6 +13,7 @@ APP.sentiment = (function(){
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
     var playerData;
     var cleanPlayerData = [];
+    var transformedArr = [];
 
     var getNewDataObj = function() {
         var vidId = APP.video.getVideoId();
@@ -69,7 +70,22 @@ APP.sentiment = (function(){
         playerData = new Firebase(playerDataUrl);
         // 1. load all data
         playerData.on('child_added', function(playerDataSnapshot) {
-            console.log(playerDataSnapshot.val(),'psd val');
+
+            _.transform(playerDataSnapshot.val(), function(result, num, key){
+                //console.log(num.time, num.value, '-----');
+                var tempObj = {};
+                var arrIndex = _.findIndex(transformedArr, {"time":num.time});
+                if(arrIndex === -1) {
+                    // create new
+                    transformedArr.push({"time":num.time, value:num.value});
+                } else {
+                    // already exists, add to it
+                    transformedArr[arrIndex].value = transformedArr[arrIndex].value+num.value
+                }
+
+            });
+
+            //console.log(playerDataSnapshot.val(),'psd val');
             // 2. handle each interval individually
             var i = 0;
             $.each(playerDataSnapshot.val(), function(name, elem){
@@ -224,6 +240,10 @@ APP.sentiment = (function(){
         });
     };
 
+    var getTransformedArr = function() {
+        return transformedArr;
+    }
+
     var initQnA = function() {
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
         if (featuredIndex > -1) {
@@ -251,7 +271,8 @@ APP.sentiment = (function(){
         getNewDataObj: getNewDataObj,
         getVoteObj: getVoteObj,
         getCleanPlayerData: getCleanPlayerData,
-        postVote: postVote
+        postVote: postVote,
+        getTransformedArr: getTransformedArr
     };
 
 }());
