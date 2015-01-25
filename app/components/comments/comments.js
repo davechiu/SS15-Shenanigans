@@ -105,7 +105,7 @@ APP.comments = (function(){
                     }
 
                     if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                        var li = '<li class="comment new'+yourComment+storage+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
+                        var li = '<li class="comment new'+yourComment+storage+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline" data-when="'+window.howLongAgoWasThisEpoch(val.dt).inEnglish+'">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
                         //console.log(lastTimeRef);
                         if(lastTimeRef === 0){
                             $('.comment-feed ul').prepend(li);
@@ -138,7 +138,11 @@ APP.comments = (function(){
 
         $("li.comment.storage").filter(function(){
             return $(this).data("time") >= (currentTime-500) && $(this).data("time") <= currentTime;
-        }).removeClass('storage').removeClass('new');
+        }).removeClass('storage');
+        setTimeout(function(){
+            // give it a sec
+            $('.comment-feed ul li.new:not(.storage)').removeClass('new');
+        }, 150);
         lastTimeRef = currentTime;
     };
     var getCommentObj = function(interval, comment) {
