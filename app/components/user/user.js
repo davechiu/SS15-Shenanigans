@@ -74,6 +74,8 @@ APP.user = (function(){
         });
         $('.nametag input#user_name').on("change keypress keyup", function () {
             $('input#posting-as').val($('.nametag input#user_name').val());
+
+            window.ga('send', 'event', 'textarea', 'name change', 'onboard');
         });
 
         $('.nametag form#intake').on('submit', function(e){
@@ -81,6 +83,7 @@ APP.user = (function(){
             // console.log($('.nametag input#user_name').val());
             // submit name to something, user object?
             nameTagHandler();
+            window.ga('send', 'event', 'submit', 'join the conversation', 'onboard');
         });
     };
     var nameTagHandler = function() {
