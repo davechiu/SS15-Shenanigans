@@ -38,8 +38,8 @@ APP.user = (function(){
     };
 
     var getUUID = function(){
-        var id = $.cookie('uuid')
-        console.log('getUUID: '+$.cookie('uuid'))
+        var id = $.cookie('uuid');
+        console.log('getUUID: '+$.cookie('uuid'));
         return id;
     };
 
