@@ -1,0 +1,88 @@
+.modal {
+
+    display: none;
+
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: auto;
+    height: 50%;
+    width: 75%;
+
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 0.5em 1em rgba(0,0,0,0.25), 0 0 0 5000px rgba(0,0,0,0.5);
+
+    @include respond-to($tablet) {
+        width: 20em;
+        height: 15em;
+    }
+
+    .wrapper {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        padding: 1em;
+    }
+
+    p {
+        margin-top: 0;
+    }
+
+    .actions {
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0.5em 1em;
+
+        a.btn {
+            text-decoration: none;
+            text-transform: uppercase;
+            color: black;
+            display: inline-block;
+            padding: 0.5em 1em;
+
+            &:hover, &:focus {
+                background: rgba(0,0,0,0.1);
+            }
+            &:active {
+                background: rgba(0,0,0,0.33);
+            }
+
+            &.ok {
+                background: $pri-color;
+                color: white;
+
+                &:hover, &:focus {
+                    background: darken($pri-color, 10%);
+                }
+                &:active {
+                    background: darken($pri-color, 20%);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * BASE COMPONENT STYLES HERE
+     * (common across all screen sizes)
+     */
+
+    /**
+     * SIZE-SPECIFIC MODIFICATIONS AND ENHANCEMENTS
+     * (start small and work up)
+     * baseline breakpoints are included, add more as needed
+     */
+
+    @include respond-to($mobile) {
+
+    }
+
+    @include respond-to($tablet) {
+
+    }
+
+    @include respond-to($desktop) {
+
+    }
+}

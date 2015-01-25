@@ -42,6 +42,7 @@ APP.global = (function(){
         APP.sentiment.init();
         APP.related.init();
         APP.notification.init();
+        APP.modal.init();
     };
 
     var initPageComponents = function() {

@@ -102,7 +102,7 @@ APP.video = (function(){
                 clearInterval(window.refreshIntervalId);
                 playerState = 'ended';
                 window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
-                // APP.video.openEndCard();
+                APP.video.openEndCard();
             }
         };
         window.stopVideo = function() {

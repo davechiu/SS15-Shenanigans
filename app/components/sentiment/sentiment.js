@@ -50,15 +50,19 @@ APP.sentiment = (function(){
 
             // only vote if video is playing, minmize spamming.
             // this might happen by nature due to waiting for the currentTime subscription... might not be a big deal.
-            //if(APP.video.getPlayerStatus() === 'playing') {
-            tempVoteValue = $(this).data('value');
-            $.subscribe('/video/currentTime', APP.sentiment.postVote);
-            // toggle questions after a delay
-            clearTimeout(window.t);
-            window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
+            if(APP.video.getPlayerStatus() === 'playing') {
+                tempVoteValue = $(this).data('value');
+                $.subscribe('/video/currentTime', APP.sentiment.postVote);
+                // toggle questions after a delay
+                clearTimeout(window.t);
+                window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
 
-            window.ga('send', 'event', 'vote', ((tempVoteValue > 0)?'positive':'negative'), APP.video.getVideoId());
-            //}
+                window.ga('send', 'event', 'vote', ((tempVoteValue > 0)?'positive':'negative'), APP.video.getVideoId());
+            } else {
+                APP.modal.createModal('I know, right?', 'Unfortunately, we can only place your vote if the video is playing.', 'Pfft', 'Ok, Play Video', function(){
+                    window.player.playVideo();
+                });
+            }
 
             // put it somewhere publically accessible for charting. this part is kind of loosy goosy, only for positive ux feedback
             freshUserVoteSum += tempVoteValue;

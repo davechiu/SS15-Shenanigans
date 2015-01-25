@@ -121,6 +121,12 @@ APP.comments = (function(){
             event.preventDefault();
             tempCommentValue = $('#post-comment').val();
             $.subscribe('/video/currentTime', APP.comments.postComment);
+
+            if(APP.video.getPlayerStatus() !== 'playing') {
+                APP.modal.createModal('We hear you!', 'Unfortunately, we can only post your comment if the video is playing.', 'As If', 'Ok, Play Video', function(){
+                    window.player.playVideo();
+                });
+            }
         });
 
     };
