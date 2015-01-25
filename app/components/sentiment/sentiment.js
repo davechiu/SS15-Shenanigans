@@ -155,7 +155,9 @@ APP.sentiment = (function(){
                 tickPixelInterval: 150,
                 labels: {
                     enabled: false
-                }
+                },
+                lineColor: '#EEEEEE',
+                tickWidth: 0
             },
             yAxis: {
                 title: {
@@ -164,8 +166,17 @@ APP.sentiment = (function(){
                 plotLines: [{
                     value: 0,
                     width: 1,
-                    color: '#808080'
+                    color: '#999999'
+                },{
+                    value: -1,
+                    width: 1,
+                    color: '#EFEFEF'
+                },{
+                    value: 1,
+                    width: 1,
+                    color: '#EFEFEF'
                 }],
+                gridLineWidth: 0,
                 labels: {
                     enabled: false
                 },

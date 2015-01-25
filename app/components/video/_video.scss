@@ -33,27 +33,46 @@
     color: white;
 
     .next {
-        margin-top: 10%;
-        font-size: 2em;
+        margin-top: 5%;
+        font-size: 1em;
         text-align: center;
 
-        span {
+        @include respond-to($tablet) {
             font-size: 1.5em;
+            max-width: 90%;
+            margin: 10% auto 0 auto;
+        }
+
+        span {
+            font-size: 1em;
             display: block;
+
+            @include respond-to($tablet) {
+                font-size: 1.5em;
+            }
         }
     }
     .play {
-        font-size: 7em;
+        font-size: 5em;
+        font-size: 10vw;
         text-align: center;
+
+        @include respond-to($tablet) {
+            font-size: 7em;
+        }
     }
     .nextCountdown {
         text-align: center;
         line-height: 1;
     }
     .replay {
-        padding-top: 2em;
+        padding-top: 2%;
         font-size: 1em;
         text-align: center;
+
+        @include respond-to($tablet) {
+            padding-top: 2em;
+        }
     }
 
     a {

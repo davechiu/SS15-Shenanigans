@@ -49,8 +49,8 @@
         $btn_color_positive: $pri-color-dark;
         $btn_color_negative: #D81B60;
 
-        width: 27%;
-        padding: 2% 10%;
+        width: 47%;
+        padding: 2% 0%;
         margin: 2%;
         z-index: 999;
         display: inline-block;
@@ -58,13 +58,17 @@
         border: 0;
         background: transparent;
         outline: none;
-        font-size: 4rem;
+        font-size: 2rem;
         color: white;
         text-decoration: none;
         text-align: center;
         box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.25);
 
         transition: all 250ms;
+
+        @include respond-to($desktop) {
+            font-size: 4rem;
+        }
 
         &:hover {
             background: rgba(153,153,153,0.2);

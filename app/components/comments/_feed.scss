@@ -1,5 +1,42 @@
 .comment-feed {
 
+    ul, li {
+    	margin: 0;
+    	padding: 0;
+    	list-style: none;
+    }
+    ul {
+    	max-height: 33vh;
+    	overflow-x: hidden;
 
+    	li {
+    		border-bottom: 1px solid #EEE;
+    		overflow: hidden;
+
+    		transition: background 500ms;
+
+            &.new {
+                background: #F4FF81;
+            }
+
+            .wrapper {
+            	padding: 1em;
+            }
+
+            .byline {
+            	font-size: 0.5em;
+            	opacity: 0.5;
+
+            	&:hover {
+            		opacity: 1;
+            	}
+            }
+            .comment {
+            	color: black;
+            	line-height: 1.5;
+            	margin-top: 0.5em;
+            }
+    	}
+    }
 
 }
