@@ -45,6 +45,9 @@ APP.sentiment = (function(){
             e.preventDefault();
             tempVoteValue = $(this).data('value');
             $.subscribe('/video/currentTime', APP.sentiment.postVote);
+            // toggle questions after a delay
+            clearTimeout(window.t);
+            window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
         });
 
     };
@@ -141,7 +144,8 @@ APP.sentiment = (function(){
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
         if (featuredIndex > -1) {
             var thisVideoObj = APP.db.getFeaturedVideosArr()[featuredIndex];
-            $('.sentiment h1').text(thisVideoObj.sentiment.question);
+            $('.sentiment h1 .pri').text(thisVideoObj.sentiment.question);
+            $('.sentiment h1 .alt').text(thisVideoObj.sentiment.questalt);
             $('.sentiment .actions a i.fa').remove();
             $('.sentiment .actions a.positive').text(thisVideoObj.sentiment.positive);
             $('.sentiment .actions a.negative').text(thisVideoObj.sentiment.negative);
