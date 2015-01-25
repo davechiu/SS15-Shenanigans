@@ -58,24 +58,22 @@ APP.comments = (function(){
     var loadFeed = function(){
         var commentFeedRef = new Firebase(APP.db.getFbBase() + '/comments/'+videoId);
         // 1. load all comments
-        commentFeedRef.once('value', function(allCommentsSnapshot) {
+        commentFeedRef.on('child_added', function(allCommentsSnapshot) {
             // 2. handle each comment individually
             allCommentsSnapshot.forEach(function(commentSnapshot) {
                 // 3. extrac values from children
-                var comment = commentSnapshot.val();
-                $.each(comment, function(uid,val){
-                    if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                        // 4. do something with them
-                        /*
-                        console.log('this id: '+uid);
-                        console.log('load comment: '+val.comment);
-                        console.log('load time: '+val.time);
-                        console.log('load dt: '+val.dt);
-                        */
-                        var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
-                        $('.comment-feed ul').prepend(li);
-                    }
-                });
+                var key = commentSnapshot.key();
+                var val = commentSnapshot.val();
+                /*
+                console.log(key+': ');
+                console.log('load comment: '+val.comment);
+                console.log('load time: '+val.time);
+                console.log('load dt: '+val.dt);
+                */
+                if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
+                    var li = '<li class="comment" data-uid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
+                    $('.comment-feed ul').prepend(li);
+                }
             });
         });
     };
