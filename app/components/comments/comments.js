@@ -113,25 +113,14 @@ APP.comments = (function(){
     };
 
     var initCommentFeed = function() {
-        window.onPlayerStateChange = function(event) {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-                window.refreshIntervalId = setInterval(function () {
-                    var duration = window.player.getDuration();
-                    currentTime = window.player.getCurrentTime();
-                    //console.log(currentTime);
-                    triggerShowComment();
-                    $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
-                }, APP.global.getRefresh());
-                playerState = 'playing';
-            } else if (event.data === window.YT.PlayerState.PAUSED) {
-                clearInterval(window.refreshIntervalId);
-                playerState = 'paused';
-            } else if (event.data === window.YT.PlayerState.ENDED) {
-                clearInterval(window.refreshIntervalId);
-                playerState = 'ended';
-            }
-        };
+        $.subscribe('/video/currentTime', APP.comments.handleCurrentTime);
     };
+
+    var handleCurrentTime = function(e, v) {
+        triggerShowComment();
+        currentTime = v;
+    };
+
     var triggerShowComment = function() {
         var currentTimeMil = currentTime * 1000;
         //console.log('timeCache: '+JSON.stringify(timeCache));
@@ -213,7 +202,8 @@ APP.comments = (function(){
     return {
         init: init,
         setup: setup,
-        postComment: postComment
+        postComment: postComment,
+        handleCurrentTime: handleCurrentTime
     };
 
 }());
