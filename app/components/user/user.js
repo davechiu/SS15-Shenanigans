@@ -42,7 +42,7 @@ APP.user = (function(){
 
     var getUUID = function(){
         var id = $.cookie('uuid');
-        console.log('getUUID: '+$.cookie('uuid'));
+        //console.log('getUUID: '+$.cookie('uuid'));
         return id;
     };
 
