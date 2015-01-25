@@ -95,7 +95,7 @@ APP.video = (function(){
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
                 window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
-                // APP.video.openEndCard();
+                APP.video.openEndCard();
             }
         };
         window.stopVideo = function() {
