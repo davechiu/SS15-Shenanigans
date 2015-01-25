@@ -56,13 +56,26 @@ APP.comments = (function(){
     };
 
     var loadFeed = function(){
-        commentRef.once('value', function(allMessagesSnapshot) {
-            allMessagesSnapshot.forEach(function(messageSnapshot) {
-                // Will be called with a messageSnapshot for each message under message_list.
-                var userId = messageSnapshot.child('user_id').val();
-                var text = messageSnapshot.child('text').val();
-                // Do something with message.
-
+        var commentFeedRef = new Firebase(APP.db.getFbBase() + '/comments/'+videoId);
+        // 1. load all comments
+        commentFeedRef.once('value', function(allCommentsSnapshot) {
+            // 2. handle each comment individually
+            allCommentsSnapshot.forEach(function(commentSnapshot) {
+                // 3. extrac values from children
+                var comment = commentSnapshot.val();
+                $.each(comment, function(uid,val){
+                    if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
+                        // 4. do something with them
+                        /*
+                        console.log('this id: '+uid);
+                        console.log('load comment: '+val.comment);
+                        console.log('load time: '+val.time);
+                        console.log('load dt: '+val.dt);
+                        */
+                        var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
+                        $('.comment-feed ul').prepend(li);
+                    }
+                });
             });
         });
     };
