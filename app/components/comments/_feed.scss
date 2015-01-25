@@ -12,11 +12,23 @@
     	li {
     		border-bottom: 1px solid #EEE;
     		overflow: hidden;
+    		height: 5em;
 
     		transition: background 500ms;
 
+            .wrapper {
+            	padding: 1em;
+            	margin-left: 0;
+
+            	transition: margin 250ms;
+            }
+
             &.new {
                 background: #F4FF81;
+
+                .wrapper {
+                	margin-left: 100%;
+                }
             }
 
             &.yours {
@@ -29,10 +41,6 @@
 	            		content: "(You) "
 	            	}
             	}
-            }
-
-            .wrapper {
-            	padding: 1em;
             }
 
             .byline {
