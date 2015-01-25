@@ -6,6 +6,12 @@ header {
     font-family: 'Open Sans', Sans-serif;
     color: white;
     box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+    font-size: 0.75em;
+
+    @include respond-to($tablet) {
+        padding: 0.75em;
+        font-size: 1em;
+    }
 
     p {
         margin: 0;
@@ -19,13 +25,13 @@ header {
         }
         small {
             font-size: 0.75em;
-            display: block;
+            display: none;
         }
 
         @include respond-to($tablet) {
             text-align: left;
             strong, small {
-                display: inline;
+                display: inline-block;
             }
         }
     }

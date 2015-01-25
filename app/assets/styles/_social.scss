@@ -1,0 +1,67 @@
+.dc-share {
+	position: absolute;
+	top: 0.65em;
+	right: 1em;
+
+	@include respond-to($desktop) {
+		top: 1em;
+		right: 1em;
+	}
+
+	ul, li {
+		padding :0;
+		margin: 0;
+		list-style: none;
+	}
+
+	&__item {
+		//
+	}
+	&__link {
+		padding: 0.5em;
+		display: block;
+		height: 1em;
+		width: 1em;
+		line-height: 1;
+		background: #55acee;
+		color: white;
+		text-decoration: none;
+		opacity: 0.75;
+		font-size: 0.5em;
+		position: relative;
+
+		@include respond-to($tablet) {
+			font-size: 0.9em;
+		}
+		@include respond-to($desktop) {
+			font-size: 1.25em;
+		}
+
+		&::before {
+			content: "Ask a friend";
+			position: absolute;
+			top: 0;
+			right: 100%;
+			white-space: nowrap;
+			line-height: 1;
+			background: #55acee;
+			padding: 0.5em 0;
+			width: 0;
+			overflow: hidden;
+			text-align: right;
+
+			transition: all 250ms;
+		}
+
+		&:hover, &:focus {
+			opacity: 1;
+
+			&::before {
+				width: 6.5em;
+			}
+		}
+		&:active {
+			opacity: darken(#55acee, 10%);
+		}
+	}
+}

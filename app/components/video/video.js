@@ -111,10 +111,14 @@ APP.video = (function(){
     };
 
     var resizeVideo = function($video) {
-        var videoWidth = $('.content .video').width();
-        var videoHeight = $('.content .video').width() * videoRatio;
+        var videoWidth = $('.content .video').parent().width();
+        var videoHeight = $('.content .video').parent().width() * videoRatio;
 
         $video.css({
+            height: videoHeight,
+            width: videoWidth
+        });
+        $video.parent().css({
             height: videoHeight,
             width: videoWidth
         });
@@ -185,6 +189,7 @@ APP.video = (function(){
         window.countDown($('#endcard .nextCountdown'), 15, 15000);
         window.nvt = setTimeout(function(){
             location.href = $('#endcard .play a').attr('href');
+            window.ga('send', 'event', 'endcard', 'next video', 'timer');
         },15000);
 
         window.ga('send', 'event', 'video', 'endcard', 'opened');
@@ -213,7 +218,9 @@ APP.video = (function(){
         $(window).on('resize', function(){
             APP.video.resizeVideo($('.content .card .video iframe'));
         });
-        $(window).trigger('resize');
+        window.wt = setTimeout(function(){
+            $(window).trigger('resize');
+        },500);
 
         initEndCard();
     };

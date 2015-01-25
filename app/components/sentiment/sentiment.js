@@ -12,7 +12,7 @@ APP.sentiment = (function(){
     var tempVoteValue;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
     var playerData;
-    var cleanPlayerData = [];
+    var chartPlayerData = [];
     var transformedArr = [];
     var freshUserVoteSum = 0;
 
@@ -80,20 +80,20 @@ APP.sentiment = (function(){
         playerData.on('child_added', function(playerDataSnapshot) {
 
             _.transform(playerDataSnapshot.val(), function(result, num, key){
-                var arrIndex = _.findIndex(cleanPlayerData, {'x':parseInt(num.time)});
+                var arrIndex = _.findIndex(chartPlayerData, {'x':parseInt(num.time)});
                 if(arrIndex === -1) {
                     // create new
-                    cleanPlayerData.push({'x':parseInt(num.time), 'y':parseInt(num.value)});
+                    chartPlayerData.push({'x':parseInt(num.time), 'y':parseInt(num.value)});
                 } else {
                     // already exists, add to it
-                    cleanPlayerData[arrIndex].y = cleanPlayerData[arrIndex].y + num.value;
+                    chartPlayerData[arrIndex].y = chartPlayerData[arrIndex].y + num.value;
                 }
             });
         });
     };
 
-    var getCleanPlayerData = function(){
-        return cleanPlayerData;
+    var getChartPlayerData = function(){
+        return chartPlayerData;
     };
 
     var initChart = function() {
@@ -112,7 +112,7 @@ APP.sentiment = (function(){
                 marginLeft: 0,
                 events: {
                     load: function () {
-                        //console.log("chart event load", this.series[0],getCleanPlayerData());
+                        // console.log("chart event load", this.series[0],getChartPlayerData());
                         //set up the updating of the chart each second
                         var series = this.series[0];
                         var interval = 0;
@@ -121,6 +121,12 @@ APP.sentiment = (function(){
                             // need to take into account new votes from firebase but only from INTERVAL forward.
                             // drop in new vote from user NOW via freshUserSum, don't wait for firebase.
                             if(APP.video.getPlayerStatus() === 'playing') {
+                                if(!$('.sentiment .wrapper').is(':visible')) {
+                                    // we're hiding the chart at first... let's hope this is not a terrible idea
+                                    $('.sentiment .wrapper').slideDown('fast', function(){
+                                        $('#chart').highcharts().reflow();
+                                    });
+                                }
                                 var tmpArr = getTransformedArr();
                                 // console.log(freshUserVoteSum);
                                 if(tmpArr.length && (tmpArr[0].x === interval || tmpArr[0].x === 0) ) {
@@ -256,14 +262,26 @@ APP.sentiment = (function(){
             $('.sentiment .actions a.positive').text(thisVideoObj.sentiment.positive);
             $('.sentiment .actions a.negative').text(thisVideoObj.sentiment.negative);
         }
+
+        $('.sentiment .share').share({
+
+            showShareCount: false,
+            networks: [
+                {
+                    network: 'twitter',
+                    display: $(document.createElement('i')).addClass('fa fa-twitter'),
+                    tweet: $('.sentiment h1 .pri').text() + ' #React #StaticShowdown'
+                }
+            ]
+        });
     };
 
     var init = function() {
         console.log('APP.sentiment');
         bindVote();
         getChartData();
-        window.asdf = setTimeout(function(){
-            setTransformedArr(getCleanPlayerData());
+        window.delayedTimer = setTimeout(function(){
+            setTransformedArr(getChartPlayerData());
             initChart();
         }, 1500);
         initQnA();
@@ -276,7 +294,7 @@ APP.sentiment = (function(){
         init: init,
         getNewDataObj: getNewDataObj,
         getVoteObj: getVoteObj,
-        getCleanPlayerData: getCleanPlayerData,
+        getChartPlayerData: getChartPlayerData,
         postVote: postVote,
         getFreshUserVotes: getFreshUserVotes,
         getTransformedArr: getTransformedArr,

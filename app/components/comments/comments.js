@@ -51,10 +51,23 @@ APP.comments = (function(){
             $('input#post-comment').focus();
         });
 
+        $('form#postname').on('submit', function(e){
+            e.preventDefault();
+            // handles username in comment area
+        });
         $('input#posting-as').on('change', function(){
-            APP.user.setName($('input#posting-as').val());
-            console.log('name changed');
-            window.ga('send', 'event', 'comment', 'name change');
+
+            if ($('input#posting-as').val().length <= 1) {
+                APP.modal.createModal('We\'re all friends here...', 'How about a longer name?', 'Fine', 'Pick For Me', function(){
+                    $('input#posting-as').val(APP.user.generateName());
+                    APP.user.setName($('input#posting-as').val());
+                    window.ga('send', 'event', 'comment', 'name change autopick');
+                });
+            } else {
+                APP.user.setName($('input#posting-as').val());
+                //console.log('name changed');
+                window.ga('send', 'event', 'comment', 'name change');
+            }
         });
 
         // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});
@@ -93,6 +106,23 @@ APP.comments = (function(){
                             $('.comment-feed ul li.new').removeClass('new');
                         }, 150);
                     }
+                    /* // from commit merge to above
+=======
+
+                var yourComment = '';
+                if(val.uuid === APP.user.getUUID()) {
+                    yourComment = ' yours';
+                }
+
+                if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
+                    var li = '<li class="comment new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline" data-when="'+window.howLongAgoWasThisEpoch(val.dt).inEnglish+'">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
+
+                    $('.comment-feed ul').prepend(li);
+                    setTimeout(function(){
+                        $('.comment-feed ul li.new').removeClass('new');
+                    }, 150);
+>>>>>>> aecb09fff4727077614b97e33e404ac36c1b5f38
+                    */
                 }
             });
         });
