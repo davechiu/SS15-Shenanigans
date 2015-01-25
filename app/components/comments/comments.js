@@ -40,16 +40,11 @@ APP.comments = (function(){
         if(APP.user.getName() !== null && APP.user.getName().length) {
             $('input#posting-as').val(APP.user.getName());
         }
-        $('form.comment-form').on('submit', function(e){
-            e.preventDefault();
-
-            console.log('submit comment');
-            // DO COMMENT SUBMISSION
-        });
         $('a.mobileSubmit').on('click',function(e){
             e.preventDefault();
             // submit button for mobile, this is not the input[type=submit] becuase we want a nice icon, can't do ::before in an input.
-            $('form.comment-form').trigger('submit');
+            $('form#postcomment').trigger('submit');
+            $('input#post-comment').focus();
         });
 
         $('input#posting-as').on('change', function(){
