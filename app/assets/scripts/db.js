@@ -16,7 +16,7 @@ APP.db = (function(){
     // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
     var dataObj = {};
 
-    var featuredVideos = [
+    var featuredVideosArr = [
         {
             "videoId": "VWf8CXwPoqI",
             "title": "PEOPLE ARE AWESOME 2014",
@@ -34,7 +34,7 @@ APP.db = (function(){
             "sentiment": {
                 "question": "Did you know that?",
                 "positive": "No, crazy!",
-                "negative": "Everyone knows that"
+                "negative": "Obviously"
             }
         },
         {
@@ -49,8 +49,8 @@ APP.db = (function(){
         }
     ];
 
-    var getFeaturedVideoObj = function() {
-        return featuredVideos;
+    var getFeaturedVideosArr = function() {
+        return featuredVideosArr;
     };
 
     var update = function(ref, value) {
@@ -99,7 +99,7 @@ APP.db = (function(){
         getFbBase: getFbBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
-        getFeaturedVideoObj: getFeaturedVideoObj,
+        getFeaturedVideosArr: getFeaturedVideosArr,
         set: set,
         push: push,
         update: update

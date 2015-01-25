@@ -6,6 +6,8 @@ var APP = window.APP = window.APP || {};
 
 APP.sentiment = (function(){
 
+    var _ = window._;
+
     var newDataObj = {};
     var tempVoteValue;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
@@ -59,7 +61,8 @@ APP.sentiment = (function(){
             chart: {
                 type: 'spline',
                 animation: window.Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
+                marginRight: 0,
+                marginLeft: 0,
                 events: {
                     load: function () {
 
@@ -78,7 +81,10 @@ APP.sentiment = (function(){
             },
             xAxis: {
                 type: '',
-                tickPixelInterval: 150
+                tickPixelInterval: 150,
+                labels: {
+                    enabled: false
+                }
             },
             yAxis: {
                 title: {
@@ -131,10 +137,22 @@ APP.sentiment = (function(){
         });
     };
 
+    var initQnA = function() {
+        var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
+        if (featuredIndex > -1) {
+            var thisVideoObj = APP.db.getFeaturedVideosArr()[featuredIndex];
+            $('.sentiment h1').text(thisVideoObj.sentiment.question);
+            $('.sentiment .actions a i.fa').remove();
+            $('.sentiment .actions a.positive').text(thisVideoObj.sentiment.positive);
+            $('.sentiment .actions a.negative').text(thisVideoObj.sentiment.negative);
+        }
+    };
+
     var init = function() {
         console.log('APP.sentiment');
         bindVote();
         initChart();
+        initQnA();
     };
 
     /**
