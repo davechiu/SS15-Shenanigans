@@ -23,6 +23,10 @@
             	transition: margin 250ms;
             }
 
+            &.storage {
+                display: none;
+            }
+
             &.new {
                 background: #F4FF81;
 
