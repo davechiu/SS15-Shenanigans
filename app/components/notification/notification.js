@@ -7,7 +7,7 @@ APP.notification = (function(){
     var messagesSeen = [];
 
     var markAsRead = function(messageId) {
-        console.log(_.indexOf(messagesSeen, messageId), messagesSeen, messageId);
+        //console.log(_.indexOf(messagesSeen, messageId), messagesSeen, messageId);
         if (_.indexOf(messagesSeen, messageId) === -1) {
             messagesSeen.push(messageId);
 
