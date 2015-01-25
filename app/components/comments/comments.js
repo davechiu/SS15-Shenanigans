@@ -67,7 +67,7 @@ APP.comments = (function(){
             // 2. handle each comment individually
             allCommentsSnapshot.forEach(function(commentSnapshot) {
                 // 3. extrac values from children
-                var key = commentSnapshot.key();
+                var key = commentSnapshot.key(); // cuid - comment uniuqe id
                 var val = commentSnapshot.val();
                 /*
                 console.log(key+': ');
@@ -76,7 +76,7 @@ APP.comments = (function(){
                 console.log('load dt: '+val.dt);
                 */
                 if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                    var li = '<li class="comment new" data-uid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+key+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
+                    var li = '<li class="comment new" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
 
                     $('.comment-feed ul').prepend(li);
                     setTimeout(function(){
@@ -89,8 +89,11 @@ APP.comments = (function(){
 
     var getCommentObj = function(interval, comment) {
         var dataObj = {};
+        var getID = APP.user.getUUID();
+        var getName = APP.user.getName();
         dataObj = {
-            // uid: userID,
+            uuid: getID,
+            name: getName,
             comment: comment,
             time: interval,
             dt: (new Date()).getTime()
