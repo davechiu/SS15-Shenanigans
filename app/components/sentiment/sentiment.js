@@ -138,10 +138,9 @@ APP.sentiment = (function(){
     };
 
     var initQnA = function() {
-        var featuredIndex = _.findIndex(APP.db.getFeaturedVideoObj(),{"videoId":APP.video.getVideoId()});
-
+        var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
         if (featuredIndex > -1) {
-            var thisVideoObj = APP.db.getFeaturedVideoObj()[featuredIndex];
+            var thisVideoObj = APP.db.getFeaturedVideosArr()[featuredIndex];
             $('.sentiment h1').text(thisVideoObj.sentiment.question);
             $('.sentiment .actions a i.fa').remove();
             $('.sentiment .actions a.positive').text(thisVideoObj.sentiment.positive);

@@ -9,13 +9,12 @@ APP.related = (function(){
         var html = '';
         var playing = '';
         var href = '';
-        var onClick = 'onclick="return false"';
         $.each(featuredVideosArr, function(i, elem){
             href = '?v=yt_'+elem.videoId; //default
 
             if (elem.videoId === APP.video.getVideoId()) {
                 playing = 'class="playing"';
-                href = 'javascript:void(0);';
+                href = '#';
             }
             html += '<li '+playing+' style="background-image: url(http://img.youtube.com/vi/'+elem.videoId+'/0.jpg);">';
             html += '<a href="'+href+'">';
