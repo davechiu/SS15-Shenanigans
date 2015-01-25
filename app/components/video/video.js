@@ -18,8 +18,6 @@ APP.video = (function(){
             // console.log(snapshot.val(), 'snapshot', exists);
 
             if(exists) {
-                // store the entire object in the APP.db name
-                // APP.db.setDataObj(exists);
                 var videoData = {};
                 videoData.videos = {};
                 videoData.videos[videoId] = snapshot.val();
