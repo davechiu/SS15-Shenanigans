@@ -44,3 +44,44 @@ var secToMillisec = function(sec) {
 var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+var countUp = function(_elements, _numeral, _duration) {
+    $(_elements).each(function() {
+        var $this = $(this);
+        $({
+            counter: 0
+        }).animate({
+            counter: _numeral
+        }, {
+            duration: _duration,
+            easing: 'linear',
+            step: function() {
+                $this.text( ((typeof $this.data('prefix') !== 'undefined')?$this.data('prefix'):'') + ( (this.counter < 10)?0:'') + Math.ceil(this.counter));
+            },
+            complete: function() {
+                // on larger counts, the animation will result close-to but not at the final number, swap final number in on-complete.
+                $this.text( ((typeof $this.data('prefix') !== 'undefined')?$this.data('prefix'):'') + _numeral );
+            }
+        });
+    });
+};
+var countDown = function(_elements, _numeral, _duration) {
+    $(_elements).each(function() {
+        var $this = $(this);
+        $({
+            counter: _numeral
+        }).animate({
+            counter: 0
+        }, {
+            duration: _duration,
+            easing: 'linear',
+            step: function() {
+                $this.text( ((typeof $this.data('prefix') !== 'undefined')?$this.data('prefix'):'') + ( (Math.ceil(this.counter) < 10)?0:'') + Math.ceil(this.counter));
+            },
+            complete: function() {
+                // on larger counts, the animation will result close-to but not at the final number, swap final number in on-complete.
+                $this.text( ((typeof $this.data('prefix') !== 'undefined')?$this.data('prefix'):'') + "00");
+            }
+        });
+    });
+};
