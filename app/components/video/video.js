@@ -49,9 +49,11 @@ APP.video = (function(){
                 height: videoHeight,
                 width: videoWidth,
                 videoId: APP.video.getVideoId(),
-                modestbranding: 0,
                 playerVars: {
-                    'autoplay': 0
+                    'modestbranding': 1,
+                    'autoplay': 0,
+                    'rel': 0,
+                    'fs': 0
                 },
                 events: {
                     'onReady': window.onPlayerReady,
