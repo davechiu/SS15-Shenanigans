@@ -67,10 +67,10 @@ APP.sentiment = (function(){
         playerData.on('child_added', function(playerDataSnapshot) {
 
             _.transform(playerDataSnapshot.val(), function(result, num, key){
-                var arrIndex = _.findIndex(cleanPlayerData, {'x':~~num.time});
+                var arrIndex = _.findIndex(cleanPlayerData, {'x':parseInt(num.time)});
                 if(arrIndex === -1) {
                     // create new
-                    cleanPlayerData.push({'x':~~num.time, 'y':num.value});
+                    cleanPlayerData.push({'x':parseInt(num.time), 'y':parseInt(num.value)});
                 } else {
                     // already exists, add to it
                     cleanPlayerData[arrIndex].y = cleanPlayerData[arrIndex].y + num.value;
@@ -84,7 +84,7 @@ APP.sentiment = (function(){
     };
 
     var initChart = function() {
-        getChartData();
+        //getChartData();
         window.Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -99,18 +99,26 @@ APP.sentiment = (function(){
                 marginLeft: 0,
                 events: {
                     load: function () {
+                        console.log("chart event load", this.series[0],getCleanPlayerData());
                         // set up the updating of the chart each second
                         var series = this.series[0];
                         var interval = 0;
-                        debugger;
+                        var x, y;
+                        // debugger;
                         setInterval(function () {
+                            //     //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
+                            //     var x = (new Date()).getTime(), // current time
+                            //         y = Math.random();
+                            //     series.addPoint([x, y], true, true);
+                            var dataPoint = series.data[interval/100];
+                            if (x && y){
+                                x = series.data[interval/100];
+                                y = series.data[interval/100];
+                                series.addPoint([x,y], true, true);
+                            }
+                            interval += 100;
                             debugger;
-                            //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                            interval += 1000;
-                        }, 1000);
+                        }, 100);
                     }
                 }
             },
@@ -118,7 +126,7 @@ APP.sentiment = (function(){
                 text: '' // don't need this.
             },
             xAxis: {
-                type: '',
+                type: 'linear',
                 tickPixelInterval: 150,
                 labels: {
                     enabled: false
@@ -163,28 +171,28 @@ APP.sentiment = (function(){
             exporting: {
                 enabled: false
             },
-            // series: [{
-            //     // http://api.highcharts.com/highcharts#Series.data
-            //     name: 'sentiment',
-            //     data: getCleanPlayerData()
-            // }],
             series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
+                // http://api.highcharts.com/highcharts#Series.data
+                name: 'Sentiment',
+                data: getCleanPlayerData()
             }],
+            // series: [{
+            //     name: 'Random data',
+            //     data: (function () {
+            //         // generate an array of random data
+            //         var data = [],
+            //             time = (new Date()).getTime(),
+            //             i;
+
+            //         for (i = -19; i <= 0; i += 1) {
+            //             data.push({
+            //                 x: time + i * 1000,
+            //                 y: Math.random()
+            //             });
+            //         }
+            //         return data;
+            //     }())
+            // }],
             credits: {
                 enabled: false
             }
@@ -210,7 +218,8 @@ APP.sentiment = (function(){
     var init = function() {
         console.log('APP.sentiment');
         bindVote();
-        initChart();
+        getChartData();
+        window.asdf = setTimeout(function(){initChart();}, 1500);
         initQnA();
     };
 
