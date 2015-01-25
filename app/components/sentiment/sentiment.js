@@ -11,6 +11,8 @@ APP.sentiment = (function(){
     var newDataObj = {};
     var tempVoteValue;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
+    var playerData;
+    var cleanPlayerData = [];
 
     var getNewDataObj = function() {
         var vidId = APP.video.getVideoId();
@@ -52,8 +54,73 @@ APP.sentiment = (function(){
 
     };
 
-    var initChart = function() {
+    var calculateDataPoint = function(objs) {
 
+    };
+
+    var formatChartData = function(){};
+
+    var movement = function(a,b){
+        return (a > 0) ? a + b : a - b;
+    };
+
+    var getChartData = function(){
+        var playerDataUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId();
+        playerData = new Firebase(playerDataUrl);
+        // 1. load all data
+        playerData.on('child_added', function(playerDataSnapshot) {
+            console.log(playerDataSnapshot.val(),'psd val');
+            // 2. handle each interval individually
+            var i = 0;
+            $.each(playerDataSnapshot.val(), function(name, elem){
+                console.log(elem, i);
+                //check for repeats
+                var data = {x: null, y: null};
+                if(i > 0) {
+                } else {
+                }
+                cleanPlayerData.push(data);
+                i++;
+            // playerDataSnapshot.forEach(function(snapshot){ //:-| wtf w/ these params... (useless but required?)
+            // for(var i = 0, len = playerDataSnapshot.length; i < len; i++) {
+            //     // debugger;
+            //     // console.log(i, elem.time, elem.value, elem, arr);
+            //     var elem = this.val();
+            //     var key = this.key();
+            //     // console.log(elem, key);
+            //     console.log(this, i);
+            //     for(var j = 0, len = this.length; j < len; j++) {
+
+            //         console.log(this, j);
+            //         // if( --i > 0 && cleanPlayerData[--i].x === elem.time) {
+            //         //     //look to last index to see if we can consolidate the data points together
+            //         //     cleanPlayerData[i].x = elem.time;
+            //         //     cleanPlayerData[i].y = movement(cleanPlayerData[--i].value, elem.value);
+            //         // } else if( --i > 0 && cleanPlayerData[--i].x !== elem.time) {
+            //         //     cleanPlayerData[i].x = elem.time;
+            //         //     cleanPlayerData[i].y = elem.value;
+            //         // } else {
+            //         //     var data = {x: elem.time, y: elem.value};
+            //         //     cleanPlayerData.push(data);
+            //         // }
+            //     }
+
+            // };
+            // playerDataSnapshot.forEach(function(snapshot) {
+            //     // 3. extract values from children
+            //     var key = snapshot.key();
+            //     var val = snapshot.val();
+            //     console.log(key, val, 'keyval');
+            });
+        });
+    };
+
+    var getCleanPlayerData = function(){
+        return cleanPlayerData;
+    };
+
+    var initChart = function() {
+        getChartData();
         window.Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -72,6 +139,7 @@ APP.sentiment = (function(){
                         // set up the updating of the chart each second
                         var series = this.series[0];
                         setInterval(function () {
+                            //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
                             var x = (new Date()).getTime(), // current time
                                 y = Math.random();
                             series.addPoint([x, y], true, true);
@@ -117,6 +185,10 @@ APP.sentiment = (function(){
             exporting: {
                 enabled: false
             },
+            // series: [{
+            //     // http://api.highcharts.com/highcharts#Series.data
+            //     data: [x: time, y:value]
+            // }],
             series: [{
                 name: 'Random data',
                 data: (function () {
@@ -131,6 +203,7 @@ APP.sentiment = (function(){
                             y: Math.random()
                         });
                     }
+                    // debugger;
                     return data;
                 }())
             }],
@@ -166,6 +239,7 @@ APP.sentiment = (function(){
         init: init,
         getNewDataObj: getNewDataObj,
         getVoteObj: getVoteObj,
+        getCleanPlayerData: getCleanPlayerData,
         postVote: postVote
     };
 

@@ -92,7 +92,7 @@ APP.video = (function(){
                 clearInterval(window.refreshIntervalId);
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
-                APP.video.openEndCard();
+                // APP.video.openEndCard();
             }
         };
         window.stopVideo = function() {
