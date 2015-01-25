@@ -131,7 +131,12 @@ APP.comments = (function(){
 
         $("li.comment.storage").filter(function(){
             return $(this).data("time") >= (currentTime-500) && $(this).data("time") <= currentTime;
-        }).removeClass('storage').removeClass('new');
+        }).removeClass('storage')
+        
+        setTimeout(function(){
+            // give it a sec
+            $('.comment-feed ul li.new:not(.storage)').removeClass('new');
+        }, 150);
 
     };
     var getCommentObj = function(interval, comment) {
