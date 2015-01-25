@@ -5,8 +5,12 @@ var APP = window.APP = window.APP || {};
 
 APP.comments = (function(){
     var videoId,
+        playerState,
         tempCommentValue,
         tempNameValue,
+        currentTime,
+        timeCache = [],
+        lastTimeRef = 0,
         commentRef = new Firebase(APP.db.getFbBase() + '/comments');
 
     var setup = function(){
@@ -19,7 +23,7 @@ APP.comments = (function(){
                 commentsData.comments[videoId] = snapshot.val();
                 APP.db.setDataObj(commentsData);
             } else {
-                var commentObj = getCommentObj(0, 0);
+                var commentObj = getCommentObj(0, null);
                 var commentVideoRef = new Firebase(APP.db.getFbBase() + '/comments/' + videoId + '/0');
                 APP.db.push(commentVideoRef, commentObj);
             }
@@ -84,25 +88,65 @@ APP.comments = (function(){
                 console.log('load time: '+val.time);
                 console.log('load dt: '+val.dt);
                 */
+                if(val.time !== 0) {
+                    // cache time values with comment ID for show comment trigger
+                    var commentInstance = { time: val.time, id: key };
+                    timeCache.push(commentInstance);
 
-                var yourComment = '';
-                if(val.uuid === APP.user.getUUID()) {
-                    yourComment = ' yours';
-                }
+                    var yourComment = '';
+                    if(val.uuid === APP.user.getUUID()) {
+                        yourComment = ' yours';
+                    }
 
-                if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                    var li = '<li class="comment new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline" data-when="'+window.howLongAgoWasThisEpoch(val.dt).inEnglish+'">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
+                    if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
+                        var li = '<li class="comment storage new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
 
-                    $('.comment-feed ul').prepend(li);
-                    setTimeout(function(){
-                        // give it a sec
-                        $('.comment-feed ul li.new:not(.storage)').removeClass('new');
-                    }, 150);
+                        $('.comment-feed ul').prepend(li);
+                        setTimeout(function(){
+                            // give it a sec
+                            $('.comment-feed ul li.new:not(.storage)').removeClass('new');
+                        }, 150);
+                    }
                 }
             });
         });
     };
 
+    var initCommentFeed = function() {
+        window.onPlayerStateChange = function(event) {
+            if (event.data === window.YT.PlayerState.PLAYING) {
+                window.refreshIntervalId = setInterval(function () {
+                    var duration = window.player.getDuration();
+                    currentTime = window.player.getCurrentTime();
+                    //console.log(currentTime);
+                    triggerShowComment();
+                    $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
+                }, APP.global.getRefresh());
+                playerState = 'playing';
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
+                clearInterval(window.refreshIntervalId);
+                playerState = 'paused';
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+                clearInterval(window.refreshIntervalId);
+                playerState = 'ended';
+            }
+        };
+    };
+    var triggerShowComment = function() {
+        var currentTimeMil = currentTime * 1000;
+        //console.log('timeCache: '+JSON.stringify(timeCache));
+        // console.log('last: '+lastTimeRef+' currentTimeMil: '+currentTimeMil);
+        $.each(timeCache, function(key, data) {
+            if(data.time > lastTimeRef && data.time <= currentTimeMil){
+                // delete myObj.test[keyToDelete];
+                $('[data-cuid="'+data.id+'"]').removeClass('hide');
+                console.log('data-cuid="'+data.id+'].removeClass');
+            }else{
+                return false;
+            }
+        });
+        lastTimeRef = currentTimeMil;
+    };
     var getCommentObj = function(interval, comment) {
         var dataObj = {};
         var getID = APP.user.getUUID();
@@ -160,7 +204,7 @@ APP.comments = (function(){
         setup();
         bindComment();
         initPostForm();
-
+        initCommentFeed();
     };
 
     /**
