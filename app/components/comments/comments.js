@@ -55,6 +55,7 @@ APP.comments = (function(){
         $('input#posting-as').on('change', function(){
             APP.user.setName($('input#posting-as').val());
             console.log('name changed');
+            window.ga('send', 'event', 'comment', 'name change');
         });
 
         // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});
@@ -75,6 +76,7 @@ APP.comments = (function(){
                 console.log('load time: '+val.time);
                 console.log('load dt: '+val.dt);
                 */
+
                 if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
                     var li = '<li class="comment new" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
 
@@ -111,6 +113,7 @@ APP.comments = (function(){
         // push and clear
         APP.db.push(refComment, getCommentObj(interval, tempCommentValue));
         clearComment();
+        window.ga('send', 'event', 'comment', 'post');
     };
 
     var bindComment = function(){

@@ -51,6 +51,8 @@ APP.sentiment = (function(){
             // toggle questions after a delay
             clearTimeout(window.t);
             window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
+
+            window.ga('send', 'event', 'vote', ((tempVoteValue > 0)?'positive':'negative'), APP.video.getVideoId());
         });
 
     };

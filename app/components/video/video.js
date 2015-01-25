@@ -88,10 +88,13 @@ APP.video = (function(){
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, APP.global.getRefresh());
+                window.ga('send', 'event', 'video', 'playing', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.PAUSED) {
                 clearInterval(window.refreshIntervalId);
+                window.ga('send', 'event', 'video', 'paused', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
+                window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
                 // APP.video.openEndCard();
             }
         };
@@ -164,6 +167,8 @@ APP.video = (function(){
         window.nvt = setTimeout(function(){
             location.href = $('#endcard .play a').attr('href');
         },15000);
+
+        window.ga('send', 'event', 'video', 'endcard', 'opened');
     };
 
     var replayVideo = function() {
@@ -171,6 +176,8 @@ APP.video = (function(){
 
         window.player.seekTo(0);
         window.player.playVideo();
+
+        window.ga('send', 'event', 'video', 'replay', 'youtube', APP.video.getVideoId());
     };
 
     var closeEndCard = function() {
