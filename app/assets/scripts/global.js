@@ -61,7 +61,7 @@ APP.global = (function(){
         easterEgg();
 
         if (APP.notification.checkIfRead('explainer') === -1) {
-            var notificaitonHtml = $(document.createElement('p')).text('React lets you vote and comment on media in Warped Time, everyone experiences it as if it was being broadcasted live!');
+            var notificaitonHtml = $(document.createElement('p')).text('Watch, vote, and comment on videos; see reactions and voting come in as if it were a live event, even though it\'s not.');
             APP.notification.createNotification('explainer', notificaitonHtml);
         }
     };
