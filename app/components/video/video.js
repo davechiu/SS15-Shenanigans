@@ -13,16 +13,20 @@ APP.video = (function(){
 
     var setup = function(){
         // get or create video record on FB
-        videosRef.once('value', function(snapshot){
-            var exists = snapshot.child(videoId).exists();
+        videosRef.child(videoId).once('value', function(snapshot){
+            var exists = snapshot.exists();
+            // console.log(snapshot.val(), 'snapshot', exists);
+
             if(exists) {
-                // store the entire object in the APP.db name
-                APP.db.setDataObj(exists);
+                var videoData = {};
+                videoData.videos = {};
+                videoData.videos[videoId] = snapshot.val();
+                APP.db.setDataObj(videoData);
             } else {
                 // create a new empty data structure based on new video Id
                 var vidId = APP.video.getVideoId();
                 var voteObj = APP.sentiment.getVoteObj(0, 0);
-                var seedVideosRef = new Firebase(APP.db.getFbBase() + '/videos/' + APP.video.getVideoId() + '/0');
+                var seedVideosRef = new Firebase(APP.db.getFbBase() + '/videos/' + videoId + '/0');
                 APP.db.push(seedVideosRef, voteObj);
             }
         });

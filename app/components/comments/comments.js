@@ -11,10 +11,13 @@ APP.comments = (function(){
 
     var setup = function(){
         // get or create video record on FB
-        commentRef.once('value', function(snapshot){
-            var exists = snapshot.child(videoId).exists();
+        commentRef.child(videoId).once('value', function(snapshot){
+            var exists = snapshot.exists();
             if(exists) {
-                APP.db.setDataObj(exists);
+                var commentsData = {};
+                commentsData.comments = {};
+                commentsData.comments[videoId] = snapshot.val();
+                APP.db.setDataObj(commentsData);
             } else {
                 var commentObj = APP.sentiment.getVoteObj(0, 0);
                 var commentVideoRef = new Firebase(APP.db.getFbBase() + '/comments/' + videoId + '/0');
@@ -63,12 +66,12 @@ APP.comments = (function(){
                 $.each(comment, function(uid,val){
                     if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
                         // 4. do something with them
-                        //*
+                        /*
                         console.log('this id: '+uid);
                         console.log('load comment: '+val.comment);
                         console.log('load time: '+val.time);
                         console.log('load dt: '+val.dt);
-                        //*/
+                        */
                         var li = '<li class="comment" data-uid="'+uid+'" data-time="'+val.time+'" data-dt="'+val.dt+'">'+val.comment+'</li>';
                         $('.comment-feed ul').prepend(li);
                     }
