@@ -61,7 +61,7 @@ APP.comments = (function(){
                 });
             } else {
                 APP.user.setName($('input#posting-as').val());
-                console.log('name changed');
+                //console.log('name changed');
                 window.ga('send', 'event', 'comment', 'name change');
             }
         });

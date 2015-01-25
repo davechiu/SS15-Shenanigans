@@ -25,14 +25,14 @@ APP.user = (function(){
         uuid = getUUID();
         var updateUser = new Firebase(APP.db.getFbBase() + '/users/'+uuid);
         updateUser.update({ name: fullName });
-        console.log('update user');
+        //console.log('update user');
     };
 
     var createUser = function() {
         var newChildRef = userRef.push();
         setUUID(newChildRef.key());
         newChildRef.set({name: fullName});
-        console.log('createUser: '+fullName);
+        //console.log('createUser: '+fullName);
     };
 
     var setUUID = function(id){
