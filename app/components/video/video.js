@@ -92,15 +92,15 @@ APP.video = (function(){
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, APP.global.getRefresh());
-                playerState = 'playing';
+                APP.video.setPlayerStatus('playing');
                 window.ga('send', 'event', 'video', 'playing', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.PAUSED) {
                 clearInterval(window.refreshIntervalId);
-                playerState = 'paused';
+                APP.video.setPlayerStatus('paused');
                 window.ga('send', 'event', 'video', 'paused', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
-                playerState = 'ended';
+                APP.video.setPlayerStatus('ended');
                 window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
                 APP.video.openEndCard();
             }
@@ -150,6 +150,10 @@ APP.video = (function(){
 
     var getVideoDuration = function() {
         return videoDuration;
+    };
+
+    var setPlayerStatus = function(str) {
+        playerState = str;
     };
 
     var getPlayerStatus = function() {
@@ -235,6 +239,7 @@ APP.video = (function(){
         setVideoService: setVideoService,
         getVideoService: getVideoService,
         getVideoDuration: getVideoDuration,
+        setPlayerStatus: setPlayerStatus,
         getPlayerStatus: getPlayerStatus,
         resizeVideo: resizeVideo,
         replayVideo: replayVideo,
