@@ -40,16 +40,11 @@ APP.comments = (function(){
         if(APP.user.getName() !== null && APP.user.getName().length) {
             $('input#posting-as').val(APP.user.getName());
         }
-        $('form.comment-form').on('submit', function(e){
-            e.preventDefault();
-
-            console.log('submit comment');
-            // DO COMMENT SUBMISSION
-        });
         $('a.mobileSubmit').on('click',function(e){
             e.preventDefault();
             // submit button for mobile, this is not the input[type=submit] becuase we want a nice icon, can't do ::before in an input.
-            $('form.comment-form').trigger('submit');
+            $('form#postcomment').trigger('submit');
+            $('input#post-comment').focus();
         });
 
         $('input#posting-as').on('change', function(){
@@ -77,8 +72,13 @@ APP.comments = (function(){
                 console.log('load dt: '+val.dt);
                 */
 
+                var yourComment = '';
+                if(val.uuid === APP.user.getUUID()) {
+                    yourComment = ' yours';
+                }
+
                 if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                    var li = '<li class="comment new" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.millisecToSec(val.time)+'sec</div><div class="comment">'+val.comment+'</div></div></li>';
+                    var li = '<li class="comment new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
 
                     $('.comment-feed ul').prepend(li);
                     setTimeout(function(){

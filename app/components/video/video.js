@@ -12,6 +12,8 @@ APP.video = (function(){
     var videoRatio = 390/640;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
     var videoDuration;
+    var playerState; // playing | paused | ended
+    var videoPercentageComplete = 0;
 
     var setup = function(){
         // get or create video record on FB
@@ -58,6 +60,7 @@ APP.video = (function(){
                 playerVars: {
                     'modestbranding': 1,
                     'autoplay': 0,
+                    'controls': 0,
                     'rel': 0,
                     'fs': 0
                 },
@@ -70,7 +73,8 @@ APP.video = (function(){
 
         // 4. The API will call this function when the video player is ready.
         window.onPlayerReady = function(event) {
-            if (typeof $.cookie('name') !== 'undefined') {
+            if (typeof $.cookie('name') !== 'undefined' && document.referrer.indexOf(location.origin) > -1) {
+                // only auto play if we are our own referrer (seems less spammy...)
                 window.player.playVideo();
             }
             // set global duration
@@ -88,12 +92,15 @@ APP.video = (function(){
                     //console.log(current_time);
                     $.publish("/video/currentTime", window.secToMillisec(currentTime.toFixed(1)));
                 }, APP.global.getRefresh());
+                playerState = 'playing';
                 window.ga('send', 'event', 'video', 'playing', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.PAUSED) {
                 clearInterval(window.refreshIntervalId);
+                playerState = 'paused';
                 window.ga('send', 'event', 'video', 'paused', 'youtube', APP.video.getVideoId());
             } else if (event.data === window.YT.PlayerState.ENDED) {
                 clearInterval(window.refreshIntervalId);
+                playerState = 'ended';
                 window.ga('send', 'event', 'video', 'ended', 'youtube', APP.video.getVideoId());
                 APP.video.openEndCard();
             }
@@ -121,7 +128,7 @@ APP.video = (function(){
         videoId = id;
     };
 
-    var getVideoService = function(){
+    var getVideoService = function() {
         return videoService;
     };
 
@@ -137,8 +144,20 @@ APP.video = (function(){
         videoRatio = float;
     };
 
-    var getVideoDuration = function(){
+    var getVideoDuration = function() {
         return videoDuration;
+    };
+
+    var getPlayerStatus = function() {
+        return playerState;
+    };
+
+    var reportVideoCompletionPercentage = function(e, currentTick) {
+        var currVideoPercentageComplete = (currentTick/APP.video.getVideoDuration()).toFixed(1) * 100;
+        if (currVideoPercentageComplete > videoPercentageComplete) {
+            videoPercentageComplete = currVideoPercentageComplete;
+            window.ga('send', 'event', 'video', 'play-'+videoPercentageComplete, 'youtube', APP.video.getVideoId());
+        }
     };
 
     var initEndCard = function() {
@@ -209,10 +228,12 @@ APP.video = (function(){
         setVideoService: setVideoService,
         getVideoService: getVideoService,
         getVideoDuration: getVideoDuration,
+        getPlayerStatus: getPlayerStatus,
         resizeVideo: resizeVideo,
         replayVideo: replayVideo,
         closeEndCard: closeEndCard,
         openEndCard: openEndCard,
+        reportVideoCompletionPercentage: reportVideoCompletionPercentage,
         setup: setup
     };
 

@@ -14,6 +14,7 @@ APP.sentiment = (function(){
     var playerData;
     var cleanPlayerData = [];
     var transformedArr = [];
+    var freshUserVoteSum = 0;
 
     var getNewDataObj = function() {
         var vidId = APP.video.getVideoId();
@@ -46,6 +47,10 @@ APP.sentiment = (function(){
     var bindVote = function(){
         $('.sentiment [data-value]').on('click', function(e){
             e.preventDefault();
+
+            // only vote if video is playing, minmize spamming.
+            // this might happen by nature due to waiting for the currentTime subscription... might not be a big deal.
+            //if(APP.video.getPlayerStatus() === 'playing') {
             tempVoteValue = $(this).data('value');
             $.subscribe('/video/currentTime', APP.sentiment.postVote);
             // toggle questions after a delay
@@ -53,6 +58,10 @@ APP.sentiment = (function(){
             window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
 
             window.ga('send', 'event', 'vote', ((tempVoteValue > 0)?'positive':'negative'), APP.video.getVideoId());
+            //}
+
+            // put it somewhere publically accessible for charting. this part is kind of loosy goosy, only for positive ux feedback
+            freshUserVoteSum += tempVoteValue;
         });
 
     };
@@ -104,16 +113,28 @@ APP.sentiment = (function(){
                         var series = this.series[0];
                         var interval = 0;
                         setInterval(function () {
-                            //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            var tmpArr = getTransformedArr();
-                            if(tmpArr[0].x === interval || tmpArr[0].x === 0) {
-                                var tmpVals = tmpArr.shift();
-                                console.log([tmpVals.x, tmpVals.y]);
-                                setTransformedArr(tmpArr);
-                                series.addPoint([tmpVals.x, tmpVals.y]);
+                            // DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
+                            // need to take into account new votes from firebase but only from INTERVAL forward.
+                            // drop in new vote from user NOW via freshUserSum, don't wait for firebase.
+                            if(APP.video.getPlayerStatus() === 'playing') {
+                                var tmpArr = getTransformedArr();
+                                // console.log(freshUserVoteSum);
+                                if(tmpArr.length && (tmpArr[0].x === interval || tmpArr[0].x === 0) ) {
+                                    // time sync'd sorta.
+                                    var tmpVals = tmpArr.shift();
+                                    //console.log([tmpVals.x, tmpVals.y]);
+                                    setTransformedArr(tmpArr);
+                                    series.addPoint([tmpVals.x, tmpVals.y + freshUserVoteSum]);
+                                } else {
+                                    // no data? value is 0
+                                    series.addPoint([interval, 0 + freshUserVoteSum]);
+                                }
+                                // debugger;
+                                if(APP.video.getPlayerStatus() === 'playing') {
+                                    interval += 100;
+                                }
+                                freshUserVoteSum = 0;
                             }
-                            // debugger;
-                            interval += 100;
                         }, 100);
                     }
                 }
@@ -217,6 +238,9 @@ APP.sentiment = (function(){
     var setTransformedArr = function(arr) {
         transformedArr = arr;
     };
+    var getFreshUserVotes = function() {
+        return freshUserVoteSum;
+    };
 
     var initQnA = function() {
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
@@ -250,6 +274,7 @@ APP.sentiment = (function(){
         getVoteObj: getVoteObj,
         getCleanPlayerData: getCleanPlayerData,
         postVote: postVote,
+        getFreshUserVotes: getFreshUserVotes,
         getTransformedArr: getTransformedArr,
         setTransformedArr: setTransformedArr
     };
