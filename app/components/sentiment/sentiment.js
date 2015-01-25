@@ -100,24 +100,20 @@ APP.sentiment = (function(){
                 events: {
                     load: function () {
                         console.log("chart event load", this.series[0],getCleanPlayerData());
-                        // set up the updating of the chart each second
+                        //set up the updating of the chart each second
                         var series = this.series[0];
                         var interval = 0;
-                        var x, y;
-                        // debugger;
                         setInterval(function () {
-                            //     //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            //     var x = (new Date()).getTime(), // current time
-                            //         y = Math.random();
-                            //     series.addPoint([x, y], true, true);
-                            var dataPoint = series.data[interval/100];
-                            if (x && y){
-                                x = series.data[interval/100];
-                                y = series.data[interval/100];
-                                series.addPoint([x,y], true, true);
+                            //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
+                            var tmpArr = getTransformedArr();
+                            if(tmpArr[0].x === interval || tmpArr[0].x === 0) {
+                                var tmpVals = tmpArr.shift();
+                                console.log([tmpVals.x, tmpVals.y]);
+                                setTransformedArr(tmpArr);
+                                series.addPoint([tmpVals.x, tmpVals.y]);
                             }
+                            // debugger;
                             interval += 100;
-                            debugger;
                         }, 100);
                     }
                 }
@@ -165,6 +161,22 @@ APP.sentiment = (function(){
             tooltip: {
                 enabled: false
             },
+            // http://goo.gl/AU8p9y
+            plotOptions: {
+                spline: {
+                    lineWidth: 3,
+                    states: {
+                        hover: {
+                            lineWidth: 3
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    // pointInterval: 3600000, // one hour
+                    // pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+                }
+            },
             legend: {
                 enabled: false
             },
@@ -174,7 +186,7 @@ APP.sentiment = (function(){
             series: [{
                 // http://api.highcharts.com/highcharts#Series.data
                 name: 'Sentiment',
-                data: getCleanPlayerData()
+                data: [{x: 0, y: 0}]
             }],
             // series: [{
             //     name: 'Random data',
@@ -202,6 +214,9 @@ APP.sentiment = (function(){
     var getTransformedArr = function() {
         return transformedArr;
     };
+    var setTransformedArr = function(arr) {
+        transformedArr = arr;
+    };
 
     var initQnA = function() {
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
@@ -219,7 +234,10 @@ APP.sentiment = (function(){
         console.log('APP.sentiment');
         bindVote();
         getChartData();
-        window.asdf = setTimeout(function(){initChart();}, 1500);
+        window.asdf = setTimeout(function(){
+            setTransformedArr(getCleanPlayerData());
+            initChart();
+        }, 1500);
         initQnA();
     };
 
@@ -232,7 +250,8 @@ APP.sentiment = (function(){
         getVoteObj: getVoteObj,
         getCleanPlayerData: getCleanPlayerData,
         postVote: postVote,
-        getTransformedArr: getTransformedArr
+        getTransformedArr: getTransformedArr,
+        setTransformedArr: setTransformedArr
     };
 
 }());
