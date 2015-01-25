@@ -88,7 +88,6 @@
 
         &.playing {
             opacity: 0.5;
-
             a {
                 color: black;
                 background-color: rgba(153, 153, 153, 0.75);
@@ -101,7 +100,9 @@
                     content: "Playing";
                     position: absolute;
                     padding: 0.5em 1em;
-                    background: rgba(0, 0, 0, 0.75);
+                    // background: rgba(0, 0, 0, 0.75);
+                    @include striped-bg(rgba(0, 0, 0, 0.75));
+                    animation: animate-stripes 5s linear infinite;
                     color: white;
                     text-decoration: none;
                     width: 5em;
@@ -129,4 +130,7 @@
     @include respond-to($desktop) {
 
     }
+}
+@keyframes animate-stripes {
+    100% { background-position: -100px 0; }
 }

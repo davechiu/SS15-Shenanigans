@@ -119,7 +119,8 @@ APP.comments = (function(){
 
                     $('.comment-feed ul').prepend(li);
                     setTimeout(function(){
-                        $('.comment-feed ul li.new').removeClass('new');
+                        // give it a sec
+                        $('.comment-feed ul li.new:not(.storage)').removeClass('new');
                     }, 150);
 >>>>>>> aecb09fff4727077614b97e33e404ac36c1b5f38
                     */
