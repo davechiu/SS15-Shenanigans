@@ -84,7 +84,7 @@ APP.comments = (function(){
     var watchFeedForUpdates = function() {
         var commentFeedRef = new Firebase(APP.db.getFbBase() + '/comments/'+videoId);
         // 1. watch for new comments
-        commentFeedRef.on('child_added', function(childSnapshot, prevChildName) {
+        commentFeedRef.on('child_changed', function(childSnapshot, prevChildName) {
             // code to handle new child.
             console.log('child has been added');
             //console.log('prev: '+prevChildName.val());
