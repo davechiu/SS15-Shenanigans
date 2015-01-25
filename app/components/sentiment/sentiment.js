@@ -11,6 +11,10 @@ APP.sentiment = (function(){
     var newDataObj = {};
     var tempVoteValue;
     var videosRef = new Firebase(APP.db.getFbBase() + '/videos');
+    var playerData;
+    var cleanPlayerData = [];
+    var transformedArr = [];
+    var freshUserVoteSum = 0;
 
     var getNewDataObj = function() {
         var vidId = APP.video.getVideoId();
@@ -43,17 +47,53 @@ APP.sentiment = (function(){
     var bindVote = function(){
         $('.sentiment [data-value]').on('click', function(e){
             e.preventDefault();
+
+            // only vote if video is playing, minmize spamming.
+            // this might happen by nature due to waiting for the currentTime subscription... might not be a big deal.
+            //if(APP.video.getPlayerStatus() === 'playing') {
             tempVoteValue = $(this).data('value');
             $.subscribe('/video/currentTime', APP.sentiment.postVote);
             // toggle questions after a delay
             clearTimeout(window.t);
             window.t = setTimeout(function(){$('h1').toggleClass('alt');}, 2750);
+
+            window.ga('send', 'event', 'vote', ((tempVoteValue > 0)?'positive':'negative'), APP.video.getVideoId());
+            //}
+
+            // put it somewhere publically accessible for charting. this part is kind of loosy goosy, only for positive ux feedback
+            freshUserVoteSum += tempVoteValue;
         });
 
     };
 
-    var initChart = function() {
+    // var calculateDataPoint = function(objs) {};
+    // var formatChartData = function(){};
 
+    var getChartData = function(){
+        var playerDataUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId();
+        playerData = new Firebase(playerDataUrl);
+        // 1. load all data
+        playerData.on('child_added', function(playerDataSnapshot) {
+
+            _.transform(playerDataSnapshot.val(), function(result, num, key){
+                var arrIndex = _.findIndex(cleanPlayerData, {'x':parseInt(num.time)});
+                if(arrIndex === -1) {
+                    // create new
+                    cleanPlayerData.push({'x':parseInt(num.time), 'y':parseInt(num.value)});
+                } else {
+                    // already exists, add to it
+                    cleanPlayerData[arrIndex].y = cleanPlayerData[arrIndex].y + num.value;
+                }
+            });
+        });
+    };
+
+    var getCleanPlayerData = function(){
+        return cleanPlayerData;
+    };
+
+    var initChart = function() {
+        //getChartData();
         window.Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -68,14 +108,34 @@ APP.sentiment = (function(){
                 marginLeft: 0,
                 events: {
                     load: function () {
-
-                        // set up the updating of the chart each second
+                        console.log("chart event load", this.series[0],getCleanPlayerData());
+                        //set up the updating of the chart each second
                         var series = this.series[0];
+                        var interval = 0;
                         setInterval(function () {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            // DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
+                            // need to take into account new votes from firebase but only from INTERVAL forward.
+                            // drop in new vote from user NOW via freshUserSum, don't wait for firebase.
+                            if(APP.video.getPlayerStatus() === 'playing') {
+                                var tmpArr = getTransformedArr();
+                                // console.log(freshUserVoteSum);
+                                if(tmpArr.length && (tmpArr[0].x === interval || tmpArr[0].x === 0) ) {
+                                    // time sync'd sorta.
+                                    var tmpVals = tmpArr.shift();
+                                    //console.log([tmpVals.x, tmpVals.y]);
+                                    setTransformedArr(tmpArr);
+                                    series.addPoint([tmpVals.x, tmpVals.y + freshUserVoteSum]);
+                                } else {
+                                    // no data? value is 0
+                                    series.addPoint([interval, 0 + freshUserVoteSum]);
+                                }
+                                // debugger;
+                                if(APP.video.getPlayerStatus() === 'playing') {
+                                    interval += 100;
+                                }
+                                freshUserVoteSum = 0;
+                            }
+                        }, 100);
                     }
                 }
             },
@@ -83,7 +143,7 @@ APP.sentiment = (function(){
                 text: '' // don't need this.
             },
             xAxis: {
-                type: '',
+                type: 'linear',
                 tickPixelInterval: 150,
                 labels: {
                     enabled: false
@@ -122,6 +182,22 @@ APP.sentiment = (function(){
             tooltip: {
                 enabled: false
             },
+            // http://goo.gl/AU8p9y
+            plotOptions: {
+                spline: {
+                    lineWidth: 3,
+                    states: {
+                        hover: {
+                            lineWidth: 3
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    // pointInterval: 3600000, // one hour
+                    // pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+                }
+            },
             legend: {
                 enabled: false
             },
@@ -129,26 +205,41 @@ APP.sentiment = (function(){
                 enabled: false
             },
             series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
+                // http://api.highcharts.com/highcharts#Series.data
+                name: 'Sentiment',
+                data: [{x: 0, y: 0}]
             }],
+            // series: [{
+            //     name: 'Random data',
+            //     data: (function () {
+            //         // generate an array of random data
+            //         var data = [],
+            //             time = (new Date()).getTime(),
+            //             i;
+
+            //         for (i = -19; i <= 0; i += 1) {
+            //             data.push({
+            //                 x: time + i * 1000,
+            //                 y: Math.random()
+            //             });
+            //         }
+            //         return data;
+            //     }())
+            // }],
             credits: {
                 enabled: false
             }
         });
+    };
+
+    var getTransformedArr = function() {
+        return transformedArr;
+    };
+    var setTransformedArr = function(arr) {
+        transformedArr = arr;
+    };
+    var getFreshUserVotes = function() {
+        return freshUserVoteSum;
     };
 
     var initQnA = function() {
@@ -166,7 +257,11 @@ APP.sentiment = (function(){
     var init = function() {
         console.log('APP.sentiment');
         bindVote();
-        initChart();
+        getChartData();
+        window.asdf = setTimeout(function(){
+            setTransformedArr(getCleanPlayerData());
+            initChart();
+        }, 1500);
         initQnA();
     };
 
@@ -177,7 +272,11 @@ APP.sentiment = (function(){
         init: init,
         getNewDataObj: getNewDataObj,
         getVoteObj: getVoteObj,
-        postVote: postVote
+        getCleanPlayerData: getCleanPlayerData,
+        postVote: postVote,
+        getFreshUserVotes: getFreshUserVotes,
+        getTransformedArr: getTransformedArr,
+        setTransformedArr: setTransformedArr
     };
 
 }());

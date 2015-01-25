@@ -44,6 +44,16 @@ var secToMillisec = function(sec) {
 var millisecToSec = function(msec) {
     return (msec / 1000).toFixed(0);
 };
+// sec to friendlyTime
+var secToMHS = function(sec) {
+    var newTime = new Date(0, 0, 0, 0, 0, 0, 0);
+    newTime.setSeconds(sec);
+
+    var output = newTime.getHours() + ':' + ((newTime.getMinutes() < 10)?'0':'') + newTime.getMinutes() + ':' + ((newTime.getSeconds() < 10)?'0':'') + newTime.getSeconds();
+
+    // do we need days as units? if so, refactor.
+    return output;
+};
 
 var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

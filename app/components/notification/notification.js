@@ -30,6 +30,8 @@ APP.notification = (function(){
                         var $notificationObj = $(this).closest('.notification');
 
                         APP.notification.markAsRead($notificationObj.data('messageId'));
+                        window.ga('send', 'event', 'notification', 'close', $notificationObj.data('messageId'));
+
                         $notificationObj.slideUp('fast');
                     }),
                     $(html)

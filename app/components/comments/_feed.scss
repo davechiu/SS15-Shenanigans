@@ -19,6 +19,18 @@
                 background: #F4FF81;
             }
 
+            &.yours {
+            	// text-align: right;
+
+            	.byline {
+            		color: $pri-color-dark;
+
+	            	&::before {
+	            		content: "(You) "
+	            	}
+            	}
+            }
+
             .wrapper {
             	padding: 1em;
             }
