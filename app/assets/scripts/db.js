@@ -51,7 +51,7 @@ APP.db = (function(){
 
     var getFeaturedVideoObj = function() {
         return featuredVideos;
-    }
+    };
 
     var update = function(ref, value) {
         ref.update(value, onComplete);
