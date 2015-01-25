@@ -76,8 +76,9 @@ APP.comments = (function(){
     var loadFeed = function(){
         var commentFeedRef = new Firebase(APP.db.getFbBase() + '/comments/'+videoId);
         // 1. load all comments
-        commentFeedRef.on('child_added', function(allCommentsSnapshot) {
+        commentFeedRef.on('child_added', function(allCommentsSnapshot, prevChildName) {
             // 2. handle each comment individually
+            //console.log(JSON.stringify('prevChildName: '+prevChildName));
             allCommentsSnapshot.forEach(function(commentSnapshot) {
                 // 3. extract values from children
                 var key = commentSnapshot.key();
@@ -105,8 +106,14 @@ APP.comments = (function(){
 
                     if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
                         var li = '<li class="comment new'+yourComment+storage+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
-
-                        $('.comment-feed ul').prepend(li);
+                        //console.log(lastTimeRef);
+                        if(lastTimeRef === 0){
+                            $('.comment-feed ul').prepend(li);
+                        }else{
+                            //console.log('stop');
+                            //console.log('prevChildName: '+prevChildName);
+                            $(li).insertBefore($('[data-time="'+prevChildName+'"]'));
+                        }
                         setTimeout(function(){
                             // give it a sec
                             $('.comment-feed ul li.new:not(.storage)').removeClass('new');
@@ -127,12 +134,12 @@ APP.comments = (function(){
     };
 
     var triggerShowComment = function() {
-        console.log(currentTime, 'currentTime from triggerShowComment');
+        //console.log(currentTime, 'currentTime from triggerShowComment');
 
         $("li.comment.storage").filter(function(){
             return $(this).data("time") >= (currentTime-500) && $(this).data("time") <= currentTime;
         }).removeClass('storage').removeClass('new');
-
+        lastTimeRef = currentTime;
     };
     var getCommentObj = function(interval, comment) {
         var dataObj = {};
