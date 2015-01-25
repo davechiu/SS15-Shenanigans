@@ -100,14 +100,17 @@ APP.sentiment = (function(){
                 events: {
                     load: function () {
                         console.log("chart event load", this.series[0],getCleanPlayerData());
-                        // set up the updating of the chart each second
-                        // var series = this.series[0];
-                        // setInterval(function () {
-                        //     //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                        //     var x = (new Date()).getTime(), // current time
-                        //         y = Math.random();
-                        //     series.addPoint([x, y], true, true);
-                        // }, 1000);
+                        //set up the updating of the chart each second
+                        var series = this.series[0];
+                        setInterval(function () {
+                            //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
+                            var tmpArr = getTransformedArr();
+                            var tmpVals = tmpArr.shift();
+                            console.log([tmpVals.x, tmpVals.y]);
+                            setTransformedArr(tmpArr);
+
+                            series.addPoint([tmpVals.x, tmpVals.y]);
+                        }, 500);
                     }
                 }
             },
@@ -163,7 +166,7 @@ APP.sentiment = (function(){
             series: [{
                 // http://api.highcharts.com/highcharts#Series.data
                 name: 'stuff',
-                data: getCleanPlayerData()
+                data: [{x: 0, y: 0}]
             }],
             // series: [{
             //     name: 'Random data',
@@ -191,6 +194,9 @@ APP.sentiment = (function(){
     var getTransformedArr = function() {
         return transformedArr;
     };
+    var setTransformedArr = function(arr) {
+        transformedArr = arr;
+    };
 
     var initQnA = function() {
         var featuredIndex = _.findIndex(APP.db.getFeaturedVideosArr(),{"videoId":APP.video.getVideoId()});
@@ -208,7 +214,10 @@ APP.sentiment = (function(){
         console.log('APP.sentiment');
         bindVote();
         getChartData();
-        window.asdf = setTimeout(function(){initChart();}, 1500);
+        window.asdf = setTimeout(function(){
+            setTransformedArr(getCleanPlayerData());
+            initChart();
+        }, 1500);
         initQnA();
     };
 
@@ -221,7 +230,8 @@ APP.sentiment = (function(){
         getVoteObj: getVoteObj,
         getCleanPlayerData: getCleanPlayerData,
         postVote: postVote,
-        getTransformedArr: getTransformedArr
+        getTransformedArr: getTransformedArr,
+        setTransformedArr: setTransformedArr
     };
 
 }());
