@@ -99,31 +99,14 @@ APP.comments = (function(){
                     }
 
                     if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                        var li = '<li class="comment hide new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
+                        var li = '<li class="comment storage new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
 
                         $('.comment-feed ul').prepend(li);
                         setTimeout(function(){
-                            $('.comment-feed ul li.new').removeClass('new');
+                            // give it a sec
+                            $('.comment-feed ul li.new:not(.storage)').removeClass('new');
                         }, 150);
                     }
-                    /* // from commit merge to above
-=======
-
-                var yourComment = '';
-                if(val.uuid === APP.user.getUUID()) {
-                    yourComment = ' yours';
-                }
-
-                if(val.comment !== undefined && val.comment !== '' && val.comment !== null){
-                    var li = '<li class="comment new'+yourComment+'" data-cuid="'+key+'" data-time="'+val.time+'" data-dt="'+val.dt+'"><div class="wrapper"><div class="byline" data-when="'+window.howLongAgoWasThisEpoch(val.dt).inEnglish+'">'+val.name+' @'+window.secToMHS(window.millisecToSec(val.time))+'</div><div class="comment">'+val.comment+'</div></div></li>';
-
-                    $('.comment-feed ul').prepend(li);
-                    setTimeout(function(){
-                        // give it a sec
-                        $('.comment-feed ul li.new:not(.storage)').removeClass('new');
-                    }, 150);
->>>>>>> aecb09fff4727077614b97e33e404ac36c1b5f38
-                    */
                 }
             });
         });
