@@ -118,6 +118,10 @@ APP.video = (function(){
             height: videoHeight,
             width: videoWidth
         });
+        $video.parent().css({
+            height: videoHeight,
+            width: videoWidth
+        });
     };
 
     var getVideoId = function() {

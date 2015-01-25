@@ -121,6 +121,12 @@ APP.sentiment = (function(){
                             // need to take into account new votes from firebase but only from INTERVAL forward.
                             // drop in new vote from user NOW via freshUserSum, don't wait for firebase.
                             if(APP.video.getPlayerStatus() === 'playing') {
+                                if(!$('.sentiment .wrapper').is(':visible')) {
+                                    // we're hiding the chart at first... let's hope this is not a terrible idea
+                                    $('.sentiment .wrapper').slideDown('fast', function(){
+                                        $('#chart').highcharts().reflow();
+                                    });
+                                }
                                 var tmpArr = getTransformedArr();
                                 // console.log(freshUserVoteSum);
                                 if(tmpArr.length && (tmpArr[0].x === interval || tmpArr[0].x === 0) ) {

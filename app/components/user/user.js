@@ -65,6 +65,10 @@ APP.user = (function(){
     var initNametag = function() {
         $('#onboarding').fadeIn('fast');
 
+        if ($.browser.ios) {
+            $('.content .video #player').hide();
+        }
+
         var tmpName = generateName();
         $('.nametag input#user_name').val(tmpName);
         $('input#posting-as').val(tmpName);
@@ -87,6 +91,11 @@ APP.user = (function(){
         });
     };
     var nameTagHandler = function() {
+
+        if ($.browser.ios) {
+            $('.content .video #player').show();
+        }
+
         $('#onboarding').fadeOut('fast');
         $('input#posting-as').val($('.nametag input#user_name').val());
         setName($('.nametag input#user_name').val());
