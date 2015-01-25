@@ -2,14 +2,14 @@
 
 var APP = window.APP = window.APP || {};
 
-APP.home = (function(){
+APP.error = (function(){
 
     var bindEventsToUI = function() {
         // ...
     };
 
     var init = function() {
-        console.log('APP.home');
+        console.log('APP.error');
         bindEventsToUI();
     };
 
