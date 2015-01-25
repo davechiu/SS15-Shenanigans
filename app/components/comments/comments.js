@@ -127,28 +127,12 @@ APP.comments = (function(){
     };
 
     var triggerShowComment = function() {
-        var currentTimeMil = currentTime * 1000;
-        //console.log('timeCache: '+JSON.stringify(timeCache));
-        //console.log('last: '+lastTimeRef+' currentTimeMil: '+currentTimeMil);
-        $.each(timeCache, function(key, data) {
-            //console.log(data.time+' > '+lastTimeRef+' && '+data.time+' <= '+currentTimeMil);
+        console.log(currentTime, 'currentTime from triggerShowComment');
 
-            // if the object was removed move on to the next object
-            if(data === null ) { return; }
-            // if the time is between the last and current time stamp
-            //  show this element and remove it from the object
-            // otherwise kill the loop
-            if(lastTimeRef < data.time && currentTimeMil >= data.time){
-                // delete myObj.test[keyToDelete];
-                var show = $('[data-cuid="'+data.id+'"]');
-                show.removeClass('storage');
-                setTimeout(function(){ show.delay(150).removeClass('new'); }, 150);
-                timeCache[key] = null;
-            }else{
-                return false;
-            }
-        });
-        lastTimeRef = currentTimeMil;
+        $("li.comment.storage").filter(function(){
+            return $(this).data("time") >= (currentTime-500) && $(this).data("time") <= currentTime;
+        }).removeClass('storage').removeClass('new');
+
     };
     var getCommentObj = function(interval, comment) {
         var dataObj = {};
