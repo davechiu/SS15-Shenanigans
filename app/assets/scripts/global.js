@@ -10,11 +10,10 @@ APP.global = (function(){
         var vidStr = str.match(/^\w{2}_/);
         if(vidStr) {
             APP.video.setVideoService(vidStr[0].slice(0, -1)); //yt
-            APP.video.setVideoId(str.substr(3, str.length )); //
+            APP.video.setVideoId(str.substr(3, str.length )); //ytId
+            //once I know the vidStr, talk to firebase
             APP.db.init();
-            console.log(str.substr(vidStr[0].length, str.length ));
         }
-        //once I know the vidStr, talk to firebase
     };
 
     var easterEgg = function(){

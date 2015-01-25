@@ -77,8 +77,6 @@ APP.db = (function(){
     };
 
     var setDataObj = function(obj) {
-        // dataObj = obj;
-        console.log(obj);
         $.extend(dataObj, obj);
     };
 

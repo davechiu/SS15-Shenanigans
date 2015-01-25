@@ -66,8 +66,8 @@ APP.comments = (function(){
         commentFeedRef.on('child_added', function(allCommentsSnapshot) {
             // 2. handle each comment individually
             allCommentsSnapshot.forEach(function(commentSnapshot) {
-                // 3. extrac values from children
-                var key = commentSnapshot.key(); // cuid - comment uniuqe id
+                // 3. extract values from children
+                var key = commentSnapshot.key();
                 var val = commentSnapshot.val();
                 /*
                 console.log(key+': ');
