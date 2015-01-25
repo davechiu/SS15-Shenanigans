@@ -14,6 +14,22 @@
         font-size: 2em;
         padding: 0.5em;
         border-bottom: 1px solid #EEE;
+
+        .alt {
+            display: none;
+        }
+        .pri {
+            display: block;
+        }
+
+        &.alt {
+            .alt {
+                display: block;
+            }
+            .pri {
+                display: none;
+            }
+        }
     }
 
     #chart {

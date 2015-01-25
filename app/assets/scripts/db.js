@@ -23,6 +23,7 @@ APP.db = (function(){
             "source": "People are Awesome",
             "sentiment": {
                 "question": "Is this awesome?",
+                "questalt": "Is that awesome?",
                 "positive": "Wicked!",
                 "negative": "Meh"
             }
@@ -33,6 +34,7 @@ APP.db = (function(){
             "source": "mental_floss",
             "sentiment": {
                 "question": "Did you know that?",
+                "questalt": "How about this, did you know this?",
                 "positive": "No, crazy!",
                 "negative": "Obviously"
             }
@@ -43,6 +45,7 @@ APP.db = (function(){
             "source": "The White House",
             "sentiment": {
                 "question": "Do you agree with the President?",
+                "questalt": "Do you agree with the President?",
                 "positive": "Yes",
                 "negative": "No"
             }
