@@ -55,15 +55,8 @@ APP.sentiment = (function(){
 
     };
 
-    var calculateDataPoint = function(objs) {
-
-    };
-
-    var formatChartData = function(){};
-
-    var movement = function(a,b){
-        return (a > 0) ? a + b : a - b;
-    };
+    // var calculateDataPoint = function(objs) {};
+    // var formatChartData = function(){};
 
     var getChartData = function(){
         var playerDataUrl = APP.db.getFbBase() + '/videos/' + APP.video.getVideoId();
@@ -72,15 +65,13 @@ APP.sentiment = (function(){
         playerData.on('child_added', function(playerDataSnapshot) {
 
             _.transform(playerDataSnapshot.val(), function(result, num, key){
-                //console.log(num.time, num.value, '-----');
-                var tempObj = {};
                 var arrIndex = _.findIndex(cleanPlayerData, {'x':num.time});
                 if(arrIndex === -1) {
                     // create new
                     cleanPlayerData.push({'x':num.time, 'y':num.value});
                 } else {
                     // already exists, add to it
-                    cleanPlayerData[arrIndex].value = cleanPlayerData[arrIndex].value + num.value;
+                    cleanPlayerData[arrIndex].y = cleanPlayerData[arrIndex].y + num.value;
                 }
             });
         });
@@ -110,9 +101,9 @@ APP.sentiment = (function(){
                         var series = this.series[0];
                         setInterval(function () {
                             //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
+                            // var x = (new Date()).getTime(), // current time
+                            //     y = Math.random();
+                            series.addPoint([0, 0], true, true);
                         }, 1000);
                     }
                 }
@@ -166,28 +157,28 @@ APP.sentiment = (function(){
             exporting: {
                 enabled: false
             },
-            // series: [{
-            //     // http://api.highcharts.com/highcharts#Series.data
-            //     data: [x: time, y:value]
-            // }],
             series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    // debugger;
-                    return data;
-                }())
+                // http://api.highcharts.com/highcharts#Series.data
+                data: getCleanPlayerData()
             }],
+            // series: [{
+            //     name: 'Random data',
+            //     data: (function () {
+            //         // generate an array of random data
+            //         var data = [],
+            //             time = (new Date()).getTime(),
+            //             i;
+
+            //         for (i = -19; i <= 0; i += 1) {
+            //             data.push({
+            //                 x: time + i * 1000,
+            //                 y: Math.random()
+            //             });
+            //         }
+            //         debugger;
+            //         return data;
+            //     }())
+            // }],
             credits: {
                 enabled: false
             }
