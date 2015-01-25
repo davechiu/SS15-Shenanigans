@@ -185,6 +185,7 @@ APP.video = (function(){
         window.countDown($('#endcard .nextCountdown'), 15, 15000);
         window.nvt = setTimeout(function(){
             location.href = $('#endcard .play a').attr('href');
+            window.ga('send', 'event', 'endcard', 'next video', 'timer');
         },15000);
 
         window.ga('send', 'event', 'video', 'endcard', 'opened');

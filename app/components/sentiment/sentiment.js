@@ -112,7 +112,7 @@ APP.sentiment = (function(){
                 marginLeft: 0,
                 events: {
                     load: function () {
-                        console.log("chart event load", this.series[0],getCleanPlayerData());
+                        // console.log("chart event load", this.series[0],getCleanPlayerData());
                         //set up the updating of the chart each second
                         var series = this.series[0];
                         var interval = 0;

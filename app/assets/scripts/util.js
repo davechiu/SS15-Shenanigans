@@ -99,3 +99,41 @@ var countDown = function(_elements, _numeral, _duration) {
         });
     });
 };
+
+var howLongAgoWasThisEpoch = function(_epoch) {
+    var diffInMillisec = new Date().getTime() - _epoch; // milliseconds since the input
+
+    var dateDiff = {
+        inSeconds: parseInt(diffInMillisec/(1000)),
+        inMinutes: parseInt(diffInMillisec/(60*1000)),
+        inHours: parseInt(diffInMillisec/(3600*1000)),
+        inDays: parseInt(diffInMillisec/(24*3600*1000)),
+        inWeeks: parseInt(diffInMillisec/(24*3600*1000*7)),
+        inMonths: parseInt(diffInMillisec/(24*3600*1000*30)),
+        inYears: parseInt(diffInMillisec/(24*3600*1000*365)),
+        inEnglish: ''
+    };
+    var humanReadableOutput;
+    if (dateDiff.inSeconds < 30) {
+        humanReadableOutput = 'just now';
+    } else if (dateDiff.inSeconds > 30 && dateDiff.inMinutes === 0) {
+        humanReadableOutput = dateDiff.inSeconds + ' seconds ago';
+    } else if (dateDiff.inMinutes > 0 && dateDiff.inHours === 0) {
+        humanReadableOutput = dateDiff.inMinutes + ' minutes ago';
+    } else if (dateDiff.inHours > 0 && dateDiff.inDays === 0) {
+        humanReadableOutput = dateDiff.inHours + ' hours ago';
+    } else if (dateDiff.inDays > 0 && dateDiff.inWeeks === 0) {
+        humanReadableOutput = 'about ' + dateDiff.inDays + ' days ago';
+    } else if (dateDiff.inWeeks > 0 && dateDiff.inMonths === 0) {
+        humanReadableOutput = 'about ' + dateDiff.inWeeks + ' weeks ago';
+    } else if (dateDiff.inMonths > 0 && dateDiff.inYears === 0) {
+        humanReadableOutput = 'about ' + dateDiff.inMonths + ' months ago';
+    } else if (dateDiff.inYears > 0) {
+        humanReadableOutput = 'about ' + dateDiff.inYears + ' years ago';
+    } else {
+        humanReadableOutput = 'a long, long time ago.';
+    }
+    dateDiff.inEnglish = humanReadableOutput;
+
+    return dateDiff;
+};

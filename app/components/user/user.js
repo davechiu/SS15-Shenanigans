@@ -37,12 +37,12 @@ APP.user = (function(){
     var setUUID = function(id){
         uuid = id;
         $.cookie('uuid', id);
-        console.log('setUUID: '+id);
+        //console.log('setUUID: '+id);
     };
 
     var getUUID = function(){
         var id = $.cookie('uuid');
-        console.log('getUUID: '+$.cookie('uuid'));
+        //console.log('getUUID: '+$.cookie('uuid'));
         return id;
     };
 
@@ -56,7 +56,7 @@ APP.user = (function(){
         if (typeof $.cookie('uuid') === 'undefined') {
             createUser();
         } else {
-            console.log('cookieUUID: '+$.cookie('uuid'));
+            //console.log('cookieUUID: '+$.cookie('uuid'));
             $.cookie('uuid', uuid);
             updateUser();
         }
