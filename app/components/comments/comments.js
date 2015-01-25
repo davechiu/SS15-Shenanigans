@@ -19,7 +19,7 @@ APP.comments = (function(){
                 commentsData.comments[videoId] = snapshot.val();
                 APP.db.setDataObj(commentsData);
             } else {
-                var commentObj = APP.sentiment.getVoteObj(0, 0);
+                var commentObj = getCommentObj(0, 0);
                 var commentVideoRef = new Firebase(APP.db.getFbBase() + '/comments/' + videoId + '/0');
                 APP.db.push(commentVideoRef, commentObj);
             }
