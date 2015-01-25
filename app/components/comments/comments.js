@@ -95,7 +95,8 @@ APP.comments = (function(){
 
                     $('.comment-feed ul').prepend(li);
                     setTimeout(function(){
-                        $('.comment-feed ul li.new').removeClass('new');
+                        // give it a sec
+                        $('.comment-feed ul li.new:not(.storage)').removeClass('new');
                     }, 150);
                 }
             });
