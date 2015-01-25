@@ -47,10 +47,23 @@ APP.comments = (function(){
             $('input#post-comment').focus();
         });
 
+        $('form#postname').on('submit', function(e){
+            e.preventDefault();
+            // handles username in comment area
+        });
         $('input#posting-as').on('change', function(){
-            APP.user.setName($('input#posting-as').val());
-            console.log('name changed');
-            window.ga('send', 'event', 'comment', 'name change');
+
+            if ($('input#posting-as').val().length <= 1) {
+                APP.modal.createModal('We\'re all friends here...', 'How about a longer name?', 'Fine', 'Pick For Me', function(){
+                    $('input#posting-as').val(APP.user.generateName());
+                    APP.user.setName($('input#posting-as').val());
+                    window.ga('send', 'event', 'comment', 'name change autopick');
+                });
+            } else {
+                APP.user.setName($('input#posting-as').val());
+                console.log('name changed');
+                window.ga('send', 'event', 'comment', 'name change');
+            }
         });
 
         // $('label[for="posting-as"]').animate({'margin-left': -1 * $('label[for="posting-as"]').width()});

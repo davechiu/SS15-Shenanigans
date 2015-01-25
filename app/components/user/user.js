@@ -87,8 +87,16 @@ APP.user = (function(){
             e.preventDefault();
             // console.log($('.nametag input#user_name').val());
             // submit name to something, user object?
-            nameTagHandler();
-            window.ga('send', 'event', 'submit', 'join the conversation', 'onboard');
+            if ($('.nametag input#user_name').val().length <= 1) {
+                APP.modal.createModal('We\'re all friends here...', 'How about a longer name?', 'Fine', 'Pick For Me', function(){
+                    $('.nametag input#user_name').val(generateName());
+                    nameTagHandler();
+                    window.ga('send', 'event', 'submit', 'join the conversation', 'autopick');
+                });
+            } else {
+                nameTagHandler();
+                window.ga('send', 'event', 'submit', 'join the conversation', 'onboard');
+            }
         });
     };
     var nameTagHandler = function() {

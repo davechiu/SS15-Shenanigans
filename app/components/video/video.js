@@ -111,8 +111,8 @@ APP.video = (function(){
     };
 
     var resizeVideo = function($video) {
-        var videoWidth = $('.content .video').width();
-        var videoHeight = $('.content .video').width() * videoRatio;
+        var videoWidth = $('.content .video').parent().width();
+        var videoHeight = $('.content .video').parent().width() * videoRatio;
 
         $video.css({
             height: videoHeight,
