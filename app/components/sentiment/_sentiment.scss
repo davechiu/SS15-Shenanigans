@@ -98,10 +98,10 @@
             margin-right: 1%;
 
             &:hover, &:focus {
-                background: darken($btn_color_positive, 5%);
+                background: darken($btn_color_positive, 15%);
             }
             &:active {
-                background: darken($btn_color_positive, 15%);
+                background: lighten($btn_color_positive, 25%);
                 box-shadow: 0 0.1em 0.25em rgba(0,0,0,0.75);
             }
         }
@@ -110,10 +110,10 @@
             margin-left: 1%;
 
             &:hover, &:focus {
-                background: darken($btn_color_negative, 5%);
+                background: darken($btn_color_negative, 15%);
             }
             &:active {
-                background: darken($btn_color_negative, 15%);
+                background: darken($btn_color_negative, 25%);
                 box-shadow: 0 0.1em 0.25em rgba(0,0,0,0.75);
             }
         }
