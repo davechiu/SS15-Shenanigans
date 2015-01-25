@@ -34,7 +34,7 @@ APP.db = (function(){
             "sentiment": {
                 "question": "Did you know that?",
                 "positive": "No, crazy!",
-                "negative": "Everyone knows that"
+                "negative": "Obviously"
             }
         },
         {

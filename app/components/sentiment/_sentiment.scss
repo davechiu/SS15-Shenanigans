@@ -30,7 +30,7 @@
     }
 
     a.btn {
-        $btn_color_positive: #F06292;
+        $btn_color_positive: $pri-color-dark;
         $btn_color_negative: #D81B60;
 
         width: 27%;
