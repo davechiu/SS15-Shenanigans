@@ -16,6 +16,43 @@ APP.db = (function(){
     // load / create, this will hold the big massive record on pageload: APP.db.getDataObj()
     var dataObj = {};
 
+    var featuredVideos = [
+        {
+            "videoId": "VWf8CXwPoqI",
+            "title": "PEOPLE ARE AWESOME 2014",
+            "source": "People are Awesome",
+            "sentiment": {
+                "question": "Is this awesome?",
+                "positive": "Wicked!",
+                "negative": "Meh"
+            }
+        },
+        {
+            "videoId": "kxIGlMrrhQM",
+            "title": "50 Common Misconceptions",
+            "source": "mental_floss",
+            "sentiment": {
+                "question": "Did you know that?",
+                "positive": "No, crazy!",
+                "negative": "Everyone knows that"
+            }
+        },
+        {
+            "videoId": "cse5cCGuHmE",
+            "title": "President Obama's 2015 State of the Union Address",
+            "source": "The White House",
+            "sentiment": {
+                "question": "Do you agree with the President?",
+                "positive": "Yes",
+                "negative": "No"
+            }
+        }
+    ];
+
+    var getFeaturedVideoObj = function() {
+        return featuredVideos;
+    }
+
     var update = function(ref, value) {
         ref.update(value, onComplete);
     };
@@ -62,6 +99,7 @@ APP.db = (function(){
         getFbBase: getFbBase,
         setDataObj: setDataObj,
         getDataObj: getDataObj,
+        getFeaturedVideoObj: getFeaturedVideoObj,
         set: set,
         push: push,
         update: update
