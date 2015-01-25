@@ -103,9 +103,9 @@ APP.sentiment = (function(){
                         var series = this.series[0];
                         setInterval(function () {
                             //DOUBLE CHECK YOUTUBE STATE (THAT IT'S PLAY/ ELSE DON'T DO THIS?)
-                            // var x = (new Date()).getTime(), // current time
-                            //     y = Math.random();
-                            series.addPoint([0, 0], true, true);
+                            var x = (new Date()).getTime(), // current time
+                                y = Math.random();
+                            series.addPoint([x, y], true, true);
                         }, 1000);
                     }
                 }
