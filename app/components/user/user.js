@@ -21,6 +21,9 @@ APP.user = (function(){
     };
 
     var updateUser = function() {
+        uuid = getUUID();
+        var updateUser = new Firebase(APP.db.getFbBase() + '/users/'+uuid);
+        updateUser.update({ name: fullName });
         console.log('update user');
     };
 
