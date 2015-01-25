@@ -18,7 +18,7 @@ APP.related = (function(){
                 href = '#';
             }
             html += '<li '+playing+' style="background-image: url(http://img.youtube.com/vi/'+elem.videoId+'/0.jpg);">';
-            html += '<a href="'+href+'">';
+            html += '<a href="'+href+'" data-videoid="'+elem.videoId+'">';
             html += '<i class="fa fa-youtube-play"></i>';
             html += '<div class="title">'+elem.title+'</div>';
             html += '<div class="source">'+elem.source+'</div></a></li>';
@@ -29,6 +29,10 @@ APP.related = (function(){
 
     var renderRelated = function(){
         $('.related ul').html(buildMarkup());
+
+        $('.related ul li a').on('click', function(){
+            window.ga('send', 'event', 'related', 'click', $(this).data('videoid'));
+        });
     };
 
     var init = function() {
