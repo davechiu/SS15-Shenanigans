@@ -10,13 +10,23 @@ header {
     p {
         margin: 0;
         line-height: 1;
+        text-align: center;
 
         strong {
             font-size: 1.5em;
             text-transform: uppercase;
+            display: block;
         }
         small {
             font-size: 0.75em;
+            display: block;
+        }
+
+        @include respond-to($tablet) {
+            text-align: left;
+            strong, small {
+                display: inline;
+            }
         }
     }
 

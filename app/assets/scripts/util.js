@@ -40,6 +40,10 @@ function getURLParameter(sParam) {
 var secToMillisec = function(sec) {
     return (sec * 1000).toFixed(0);
 };
+// milliseconds to seconds
+var millisecToSec = function(msec) {
+    return (msec / 1000).toFixed(0);
+};
 
 var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
