@@ -6,7 +6,6 @@ Measuring viewer sentiment in realtime.
 
 http://localhost:9000/?v=yt_nBJV56WUDng
 
-
 ## Thoughts about commenting - All nice to haves... Just saying...
 
 160 characters is too long for a comment, things will get cluttered when lots of comments are floating by (limiting to 80).
